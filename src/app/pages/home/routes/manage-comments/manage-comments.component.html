@@ -17,6 +17,13 @@
       <tr>
         <td>{{ data.title }}</td>
         <td>{{ data.category }}</td>
+        <td>
+          {{
+            data.comments.length <= 1
+              ? data.comments.length + " Comentário"
+              : data.comments.length + " Comentários"
+          }}
+        </td>
         <td class="action">
           <app-button [size]="'xs'" icon="pencil" [style]="'secondary'">
             Editar

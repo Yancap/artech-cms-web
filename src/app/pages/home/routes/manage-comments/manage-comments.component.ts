@@ -6,36 +6,93 @@ const mockDadosTabela = [
   {
     title: 'Titulo do artigo sobre o Front-End e suas tecnologias',
     category: 'Front-end',
-    createdAt: 'Jan 01, 2023',
+    comments: [
+      {
+        id: 1,
+        text: 'Comentário 1',
+        createdAt: '07/05/2025',
+        userName: 'John Doe',
+      },
+    ],
   },
   {
     title: 'Titulo do artigo sobre o Front-End e suas tecnologias',
     category: 'Front-end',
-    createdAt: 'Jan 02, 2023',
+    comments: [],
   },
   {
     title: 'Titulo do artigo sobre o Front-End e suas tecnologias',
     category: 'Front-end',
-    createdAt: 'Jan 03, 2023',
+    comments: [
+      {
+        id: 1,
+        text: 'Comentário 1',
+        createdAt: '07/05/2025',
+        userName: 'John Doe',
+      },
+      {
+        id: 2,
+        text: 'Comentário 2',
+        createdAt: '07/05/2025',
+        userName: 'John Doe',
+      },
+      {
+        id: 3,
+        text: 'Comentário 3',
+        createdAt: '07/05/2025',
+        userName: 'John Doe',
+      },
+      {
+        id: 4,
+        text: 'Comentário 4',
+        createdAt: '07/05/2025',
+        userName: 'John Doe',
+      },
+      {
+        id: 5,
+        text: 'Comentário 5',
+        createdAt: '07/05/2025',
+        userName: 'John Doe',
+      },
+      {
+        id: 6,
+        text: 'Comentário 6',
+        createdAt: '07/05/2025',
+        userName: 'John Doe',
+      },
+      {
+        id: 7,
+        text: 'Comentário 7',
+        createdAt: '07/05/2025',
+        userName: 'John Doe',
+      },
+    ],
   },
   {
     title: 'Titulo do artigo sobre o Front-End e suas tecnologias',
     category: 'Front-end',
-    createdAt: 'Jan 04, 2023',
-  },
-  {
-    title: 'Titulo do artigo sobre o Front-End e suas tecnologias',
-    category: 'Front-end',
-    createdAt: 'Jan 05, 2023',
+    comments: [
+      {
+        id: 2,
+        text: 'Comentário 2',
+        createdAt: '07/05/2025',
+        userName: 'John Doe',
+      },
+      {
+        id: 2,
+        text: 'Comentário 2',
+        createdAt: '07/05/2025',
+        userName: 'John Doe',
+      },
+    ],
   },
 ];
-
 @Component({
   selector: 'app-manage-comments',
   standalone: true,
   imports: [ButtonComponent, PaginatorComponent],
   templateUrl: './manage-comments.component.html',
-  styleUrl: './manage-comments.component.scss'
+  styleUrl: './manage-comments.component.scss',
 })
 export class ManageCommentsComponent {
   public dataSource = mockDadosTabela;
