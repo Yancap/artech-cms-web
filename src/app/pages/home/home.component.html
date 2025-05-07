@@ -1,0 +1,59 @@
+<header class="container">
+  <div>
+    <div class="nav-container">
+      <img src="/logo.svg" alt="" />
+      <nav>
+        <div class="nav-item active">
+          <a href="" routerLink="/">Artigos</a>
+        </div>
+        <div class="nav-item">
+          <a href="">Criar</a>
+        </div>
+      </nav>
+    </div>
+    <div class="profile-container">
+      <app-profile />
+    </div>
+  </div>
+</header>
+<main class="container">
+  <aside>
+    <section>
+      <h5>Configurações</h5>
+      <ul class="aside-container-nav">
+        <li>
+          <a href="" class="" routerLinkActive="active" routerLink="/article/active">
+            <app-svg name="web"  />
+            Publicados
+          </a>
+        </li>
+        <li>
+          <a href="" routerLinkActive="active" routerLink="/article/draft">
+            <app-svg name="draw" />
+            Rascunhos
+          </a>
+        </li>
+        <li>
+          <a href="" routerLinkActive="active"  routerLink="/article/disabled">
+            <app-svg name="inactive"  />
+            Desativados
+          </a>
+        </li>
+      </ul>
+    </section>
+    <section>
+      <h5>Gerenciar</h5>
+      <ul class="aside-container-nav">
+        <li>
+          <a href="" routerLinkActive="active" routerLink="/manage/comment">
+            <app-svg name="comments" />
+            Comentários
+          </a>
+        </li>
+      </ul>
+    </section>
+  </aside>
+  <section class="container-section-page">
+    <router-outlet />
+  </section>
+</main>

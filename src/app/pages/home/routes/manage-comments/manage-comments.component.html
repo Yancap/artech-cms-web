@@ -1,0 +1,33 @@
+<div>
+  <header>
+    <h1>Comentários</h1>
+  </header>
+  <table class="table-artech">
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Categoria</th>
+        <th>Comentários</th>
+        <th class="action"></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (data of dataSource; track $index) {
+
+      <tr>
+        <td>{{ data.title }}</td>
+        <td>{{ data.category }}</td>
+        <td class="action">
+          <app-button [size]="'xs'" icon="pencil" [style]="'secondary'">
+            Editar
+          </app-button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  <app-paginator
+    [tablePageData]="dadosServer"
+    (paginate)="onChangePage($event)"
+  />
+</div>

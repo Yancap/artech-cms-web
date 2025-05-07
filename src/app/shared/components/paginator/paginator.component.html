@@ -1,0 +1,80 @@
+<!-- <div>
+  @if (pageLength > limitBtnInContainer && (pagePointer + 2) < limitBtnInContainer ) { @for (item of
+  [].constructor(limitBtnInContainer - 1); track $index) {
+  <button
+    [className]="$index === pagePointer && 'current_page'"
+    (click)="click($index)"
+  >
+    {{ $index + 1 }}
+  </button>
+  }
+  <span>...</span>
+  <button
+    [className]="pageLength - 1 === pagePointer && 'current_page'"
+    (click)="click(pageLength - 1)"
+  >
+    {{ pageLength }}
+  </button>
+  } @else {
+    @if (pageLength > limitBtnInContainer) {
+      <button [className]="0 === pagePointer && 'current_page'" (click)="click(0)">
+        {{ 1 }}
+      </button>
+      <span>...</span>
+      @for (item of [].constructor(pageLength); track $index) {
+        <button
+          [className]="$index === pagePointer && 'current_page'"
+          (click)="click($index)"
+        >
+          {{ $index + 1 }}
+        </button>
+      }
+    } @else {
+      @for (item of [].constructor(pageLength); track $index) {
+        <button
+          [className]="$index === pagePointer && 'current_page'"
+          (click)="click($index)"
+        >
+          {{ $index + 1 }}
+        </button>
+      }
+    }
+  }
+</div> -->
+<div class="container-buttons">
+  <button
+    [disabled]="pagePointer === 0"
+    (click)="leftPaginator()"
+    class="arrow"
+  >
+    <app-svg name="arrow-left" />
+  </button>
+  @if (outOfLeftIndex) {
+  <button  [className]="0 === pagePointer ? 'page current_page' : 'page'" (click)="click(0)">
+    {{ 1 }}
+  </button>
+  <span>...</span>
+  } @for (item of arrayButtons; track $index) {
+  <button
+    [className]="item === pagePointer ? 'page current_page' : 'page'"
+    (click)="click(item)"
+  >
+    {{ item + 1 }}
+  </button>
+  } @if (outOfRightIndex) {
+  <span>...</span>
+  <button
+    [className]="pageLength - 1 === pagePointer ? 'page current_page' : 'page'"
+    (click)="click(pageLength - 1)"
+  >
+    {{ pageLength }}
+  </button>
+  }
+  <button
+    [disabled]="pagePointer === pageLength - 1"
+    (click)="rightPaginator()"
+    class="arrow"
+  >
+    <app-svg name="arrow-right"/>
+  </button>
+</div>

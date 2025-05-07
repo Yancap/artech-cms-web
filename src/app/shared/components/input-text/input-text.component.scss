@@ -1,0 +1,48 @@
+div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+label {
+  font-weight: 500;
+  color: white;
+}
+input {
+  background-color: var(--dark-purple-900);
+  border: .25px solid var(--purple-500);
+  border-radius: .25rem;
+  color: var(--dark-purple-100);
+  outline: none;
+}
+input::placeholder {
+  color: var(--dark-purple-400);
+}
+
+
+input:focus {
+  outline: 1.5px solid var(--purple-700);
+}
+
+
+.input-md {
+  label {
+    font-size: 1.25rem;
+  }
+
+  input {
+    padding: 0.75rem 0.875rem;
+    font-size: 1rem;
+  }
+}
+
+.input-sm {
+  label {
+    font-size: 1rem;
+  }
+
+  input {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+}

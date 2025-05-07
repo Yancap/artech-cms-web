@@ -1,0 +1,2 @@
+# Os guards são utilizados para proteger rotas, controlando o acesso a determinadas partes da aplicação com base em
+condições especificas, como autenticação ou autorização do usuário.

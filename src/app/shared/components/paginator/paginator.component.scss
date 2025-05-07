@@ -1,0 +1,64 @@
+button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.container-buttons {
+  display: flex;
+  gap: .5rem;
+}
+
+
+span {
+  font-family: monospace;
+  color: var(--dark-purple-400);
+  display: flex;
+  align-items: flex-end;
+}
+
+button.arrow {
+  background: none;
+  border: none;
+  outline: none;
+  margin: 0 1rem;
+}
+
+button.page {
+  height: 1.5rem;
+  width: 1.5rem;
+  background:  var(--dark-purple-700);
+  color: var(--dark-purple-900);
+  font-family: "Ubuntu", sans-serif;
+  font-weight: bold;
+  border: none;
+  outline: none;
+  border-radius: .25rem;
+}
+
+
+button.page.current_page {
+
+  background:  var(--purple-700);
+  color: white;
+  font-family: "Ubuntu", sans-serif;
+  font-weight: bold;
+}
+
+:host {
+  ::ng-deep {
+    button.arrow {
+      path {
+        fill: var(--dark-purple-600);
+        transition: .25s;
+      }
+
+      &:hover {
+        path {
+          fill: white;
+        }
+      }
+    }
+  }
+}

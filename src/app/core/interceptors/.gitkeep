@@ -1,0 +1,2 @@
+# Os interceptors são utilizados para interceptar e manipular solicitações e respostas HTTP, permitindo a adição de lógica
+personalizada como autenticação, tratamento de erros e logging
