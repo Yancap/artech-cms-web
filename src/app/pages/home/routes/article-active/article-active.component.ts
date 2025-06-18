@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { PaginatorComponent } from '../../../../shared/components/paginator/paginator.component';
+import { ArticleService } from '../../../../shared/services/article/article.service';
+import { ArticleState } from '../../../../shared/models/enums/article-state.enums';
 
 const mockDadosTabela = [
   {
@@ -27,7 +29,7 @@ const mockDadosTabela = [
     title: 'Titulo do artigo sobre o Front-End e suas tecnologias',
     category: 'Front-end',
     createdAt: 'Jan 05, 2023',
-  }
+  },
 ];
 
 @Component({
@@ -37,9 +39,15 @@ const mockDadosTabela = [
   templateUrl: './article-active.component.html',
   styleUrl: './article-active.component.scss',
 })
-export class ArticleActiveComponent {
+export class ArticleActiveComponent implements OnInit {
   public dataSource = mockDadosTabela;
   public dadosServer = mockDadosTabela;
+
+  constructor(private articleService: ArticleService){};
+
+  ngOnInit(): void {
+    this.articleService.getArticleByState(ArticleState.active);
+  }
   onChangePage(tableDataOutput: any[]) {
     this.dataSource = tableDataOutput;
   }

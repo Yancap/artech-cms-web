@@ -29,11 +29,14 @@
 }
 
 .border-external.active{
-  border: 2px solid var(--purple-300);
+  border: 2.5px solid var(--purple-300);
 }
 
 .border-internal{
   border-radius: 1000px;
+}
+
+.border-internal.without-image{
   padding: .65rem;
 }
 

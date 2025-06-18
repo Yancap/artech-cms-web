@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { SvgComponent } from '../svg/svg.component';
 
 @Component({
@@ -6,7 +6,7 @@ import { SvgComponent } from '../svg/svg.component';
   standalone: true,
   imports: [SvgComponent],
   template: `
-    <button [class]="'btn-' + size + ' ' + style">
+    <button [class]="'btn-' + size + ' ' + style" >
       @if (icon) {
         <app-svg [name]="icon" />
       }
@@ -25,4 +25,13 @@ export class ButtonComponent {
     | 'error'
     | 'warning' = 'primary';
   @Input() public icon!: string;
+
+  //@Output() click: EventEmitter<Event> = new EventEmitter();
+
+  // public handleClick(event: Event) {
+  //   event.preventDefault()
+  //   console.log("AAAAAAAAAAAAAAAAAA3333333333");
+
+  //   this.click.emit(event);
+  // }
 }

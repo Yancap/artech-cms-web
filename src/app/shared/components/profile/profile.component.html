@@ -1,11 +1,19 @@
 <div class="container-profile">
   <div class="container-info">
-    <p class="author-name">Yan Gabriel</p>
-    <span class="author-email">{{ "yan@email.com" }}</span>
+    <p class="author-name">{{ userData.name }}</p>
+    <span class="author-email">{{ userData.email }}</span>
   </div>
   <div class="border-external active">
+    @if (userData.urlAvatar) {
     <div class="border-internal">
+      <img [src]="userData.urlAvatar" alt="" srcset="" />
+    </div>
+
+    } @else {
+    <div class="border-internal without-image">
       <img src="/svg/person.svg" alt="" srcset="" />
     </div>
+
+    }
   </div>
 </div>
