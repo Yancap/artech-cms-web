@@ -1,0 +1,39 @@
+@if (scope === 'top') {
+<div class="bg-modal" (click)="closeModal()">
+  <div class="bg-message-modal modal-type-{{ type.toLowerCase() }}">
+    <header>
+      <div class="message-modal-title">
+        <app-svg [name]="type.toLowerCase()" />
+        <h6>{{ type }}</h6>
+      </div>
+      <div class="message-modal-close">
+        <button (click)="closeModal()">
+          <app-svg name="close" />
+        </button>
+      </div>
+    </header>
+    <div class="message-modal-body">
+      <h5>{{ message }}</h5>
+      <p>{{ details }}</p>
+    </div>
+  </div>
+</div>
+} @else {
+<div class="bg-message-modal modal-type-{{ type.toLowerCase() }}">
+  <header>
+    <div class="message-modal-title">
+      <app-svg [name]="type.toLowerCase()" />
+      <h6>{{ type }}</h6>
+    </div>
+    <div class="message-modal-close">
+      <button (click)="closeModal()">
+        <app-svg name="close" />
+      </button>
+    </div>
+  </header>
+  <div class="message-modal-body">
+    <h5>{{ message }}</h5>
+    <p>{{ details }}</p>
+  </div>
+</div>
+}

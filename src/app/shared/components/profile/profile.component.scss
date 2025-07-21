@@ -4,6 +4,15 @@
   align-items: center;
 }
 
+.container-profile.left {
+  .container-info {
+    order: 2;
+  }
+  .border-external{
+    order: 1;
+  }
+}
+
 .container-info {
   display: flex;
   flex-direction: column;

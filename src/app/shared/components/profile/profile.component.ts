@@ -1,5 +1,6 @@
+import { take } from 'rxjs';
 import { AuthService } from './../../services/auth/auth.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-profile',
@@ -9,18 +10,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrl: './profile.component.scss',
 })
 export class ProfileComponent implements OnInit {
-  public userData: IUserData = {
-    name: '',
-    email: '',
-    urlAvatar: undefined,
-    role: '',
-  };
+  @Input() userData?: IUserData;
+  @Input() direction: 'right' | 'left' = 'right';
 
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.authService.userAccess.subscribe((userData) => {
-      this.userData = userData;
-    });
+    if (!this.userData) {
+      if (this.authService.userAccess['_buffer'].length === 0) {
+        this.authService.getAccess().pipe(take(1)).subscribe();
+      }
+      this.authService.userAccess.subscribe((userData) => {
+        this.userData = userData;
+      });
+    }
   }
 }

@@ -1,8 +1,18 @@
 <main>
+  <ng-template #containerModals> </ng-template>
   <div class="container-form">
     <form>
-      <app-input-text label="Email" placeholder="seu@email.com" (value)="email($event)"/>
-      <app-input-text label="Senha" placeholder="Senha" type="password" (value)="password($event)"/>
+      <app-input-text
+        label="Email"
+        placeholder="seu@email.com"
+        (value)="email($event)"
+      />
+      <app-input-text
+        label="Senha"
+        placeholder="Senha"
+        type="password"
+        (value)="password($event)"
+      />
       <app-button (click)="login($event)">Entrar</app-button>
     </form>
   </div>

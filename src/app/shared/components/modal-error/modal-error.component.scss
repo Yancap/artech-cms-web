@@ -1,0 +1,128 @@
+.bg-modal {
+  background: #252525af;
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  z-index: 5;
+  .bg-message-modal {
+    margin-top: 6rem;
+    width: 45rem;
+    z-index: 10;
+  }
+}
+
+button {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.bg-message-modal {
+  padding: 0.5rem;
+  margin: 1rem 0;
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  header {
+    display: flex;
+    justify-content: space-between;
+  }
+  .message-modal-title {
+    padding-left: 0.5rem;
+    padding-top: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    h6 {
+      font-size: 0.825rem;
+      font-weight: bold;
+      font-family: "Poppins", sans-serif;
+    }
+  }
+  .message-modal-body {
+    h5 {
+      font-size: 1rem;
+      font-weight: bold;
+      font-family: "Ubuntu", sans-serif;
+      margin-bottom: .15rem;
+    }
+    p {
+      font-size: .9rem;
+      font-weight: 500;
+      font-family: "Ubuntu", sans-serif;
+    }
+    padding-bottom: 0.75rem;
+    padding-left: 0.5rem;
+  }
+  .message-modal-close {
+    cursor: pointer;
+  }
+}
+
+:host {
+  ::ng-deep {
+    .message-modal-title svg {
+      height: 1rem;
+      width: 1rem;
+    }
+    .modal-type-error {
+      svg path {
+        fill: var(--red-700);
+      }
+    }
+
+    .modal-type-warning {
+      svg path {
+        fill: var(--yellow-700);
+      }
+    }
+
+    .modal-type-info {
+      svg path {
+        fill: var(--blue-700);
+      }
+    }
+  }
+}
+
+.modal-type-error {
+  background: var(--red-300);
+  h6,
+  h5 {
+    color: var(--red-700);
+  }
+  p {
+    color: var(--red-500);
+  }
+}
+
+.modal-type-warning {
+  background: var(--yellow-300);
+  h6,
+  h5 {
+    color: var(--yellow-700);
+  }
+  p {
+    color: var(--yellow-500);
+  }
+}
+
+.modal-type-info {
+  background: var(--blue-300);
+  h6,
+  h5 {
+    color: var(--blue-700);
+  }
+  p {
+    color: var(--blue-500);
+  }
+}

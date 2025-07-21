@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component } from '@angular/core';
 import { PaginatorComponent } from '../../../../shared/components/paginator/paginator.component';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 
@@ -94,9 +94,11 @@ const mockDadosTabela = [
   templateUrl: './manage-comments.component.html',
   styleUrl: './manage-comments.component.scss',
 })
-export class ManageCommentsComponent {
+export class ManageCommentsComponent  {
   public dataSource = mockDadosTabela;
   public dadosServer = mockDadosTabela;
+
+
   onChangePage(tableDataOutput: any[]) {
     this.dataSource = tableDataOutput;
   }

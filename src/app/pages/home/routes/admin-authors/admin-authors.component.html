@@ -1,0 +1,51 @@
+<div>
+  <header>
+    <h1>Autores</h1>
+    <!-- TODO: Fazer o filtro -->
+  </header>
+  <table class="table-artech">
+    <thead>
+      <tr>
+        <th>Autor</th>
+        <th>Quantidade de Artigos</th>
+        <th class="action"></th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (data of dataSource; track $index) {
+
+      <tr>
+        <td style="padding-left: 1rem">
+          <app-profile
+            [userData]="{
+              name: data.name,
+              email: data.email,
+              urlAvatar: data.urlAvatar,
+              role: ''
+            }"
+            direction="left"
+          />
+        </td>
+        <td>
+          {{
+            data.quantitiesArticles <= 1
+              ? data.quantitiesArticles + " Artigo"
+              : data.quantitiesArticles + " Artigos"
+          }}
+        </td>
+        <td class="action">
+          <app-button [size]="'xs'" icon="trash" [style]="'error'">
+            Excluir
+          </app-button>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+  @if (dataSource) {
+  <app-paginator
+    [tablePageData]="dataServer"
+    (paginate)="onChangePage($event)"
+  />
+  }
+</div>

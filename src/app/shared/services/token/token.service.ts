@@ -23,4 +23,11 @@ export class TokenService {
       sessionStorage.setItem('token', token);
     }
   }
+
+
+  resetUserToken() {
+    if (this.isBrowser()) {
+      sessionStorage.removeItem('token');
+    }
+  }
 }

@@ -1,10 +1,12 @@
-<div class="container-profile">
+<div class="container-profile {{ direction }}">
   <div class="container-info">
+    @if (userData) {
     <p class="author-name">{{ userData.name }}</p>
     <span class="author-email">{{ userData.email }}</span>
+    }
   </div>
   <div class="border-external active">
-    @if (userData.urlAvatar) {
+    @if (userData && userData.urlAvatar) {
     <div class="border-internal">
       <img [src]="userData.urlAvatar" alt="" srcset="" />
     </div>

@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { PaginatorComponent } from '../../../../shared/components/paginator/paginator.component';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { ArticleService } from '../../../../shared/services/article/article.service';
 import { ArticleState } from '../../../../shared/models/enums/article-state.enums';
+import { tap } from 'rxjs';
+import { DatePipe } from '@angular/common';
 const mockDadosTabela = [
   {
     title: 'Titulo do artigo sobre o Front-End e suas tecnologias',
@@ -33,17 +35,31 @@ const mockDadosTabela = [
 @Component({
   selector: 'app-article-disabled',
   standalone: true,
-  imports: [ButtonComponent, PaginatorComponent],
+  imports: [ButtonComponent, PaginatorComponent, DatePipe],
   templateUrl: './article-disabled.component.html',
   styleUrl: './article-disabled.component.scss',
 })
-export class ArticleDisabledComponent implements OnInit {
-  public dataSource = mockDadosTabela;
-  public dadosServer = mockDadosTabela;
+export class ArticleDisabledComponent implements OnInit,AfterContentInit {
+  public dataSource: IArticleForTable[] = [];
+  public dataServer: IArticleForTable[] = [];
 
-  constructor(private articleService: ArticleService) {}
+  constructor(private articleService: ArticleService,
+      private cd: ChangeDetectorRef
+    ) {}
+
+    ngAfterContentInit(): void {
+      this.cd.detectChanges();
+    }
   ngOnInit(): void {
-    this.articleService.getArticleByState(ArticleState.disabled);
+    this.articleService
+      .getArticleByState(ArticleState.disabled)
+      .pipe(
+        tap((data) => {
+          this.dataSource = data;
+          this.dataServer = data;
+        })
+      )
+      .subscribe();
   }
   onChangePage(tableDataOutput: any[]) {
     this.dataSource = tableDataOutput;

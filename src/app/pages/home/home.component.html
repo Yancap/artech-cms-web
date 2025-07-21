@@ -22,20 +22,31 @@
       <h5>Configurações</h5>
       <ul class="aside-container-nav">
         <li>
-          <a href="" class="" routerLinkActive="active" routerLink="/article/active">
-            <app-svg name="web"  />
+          <a
+            href=""
+            class=""
+            routerLinkActive="active"
+            routerLink="/article/active"
+          >
+            <div class="icon-nav">
+              <app-svg name="web" />
+            </div>
             Publicados
           </a>
         </li>
         <li>
           <a href="" routerLinkActive="active" routerLink="/article/draft">
-            <app-svg name="draw" />
+            <div class="icon-nav">
+              <app-svg name="draw" />
+            </div>
             Rascunhos
           </a>
         </li>
         <li>
-          <a href="" routerLinkActive="active"  routerLink="/article/disabled">
-            <app-svg name="inactive"  />
+          <a href="" routerLinkActive="active" routerLink="/article/disabled">
+            <div class="icon-nav">
+              <app-svg name="inactive" />
+            </div>
             Desativados
           </a>
         </li>
@@ -46,14 +57,40 @@
       <ul class="aside-container-nav">
         <li>
           <a href="" routerLinkActive="active" routerLink="/manage/comment">
-            <app-svg name="comments" />
+            <div class="icon-nav">
+              <app-svg name="comments" />
+            </div>
             Comentários
           </a>
         </li>
+        @if (userData && userData.role === "Admin") {
+        <li>
+          <a href="" routerLinkActive="active" routerLink="/admin/articles">
+            <div class="icon-nav">
+              <app-svg name="article" />
+            </div>
+            Artigos
+          </a>
+        </li>
+        <li>
+          <a href="" routerLinkActive="active" routerLink="/admin/authors">
+            <div class="icon-nav">
+              <app-svg name="authors" />
+            </div>
+            Autores
+          </a>
+        </li>
+        }
       </ul>
     </section>
   </aside>
-  <section class="container-section-page">
-    <router-outlet />
-  </section>
+  <div>
+    <!-- <app-modal-error /> -->
+     <ng-template #containerModals>
+
+     </ng-template>
+    <section class="container-section-page">
+      <router-outlet />
+    </section>
+  </div>
 </main>

@@ -17,8 +17,8 @@
 
       <tr>
         <td>{{ data.title }}</td>
-        <td>{{ data.category }}</td>
-        <td>{{ data.createdAt }}</td>
+        <td>{{ data["category"] }}</td>
+        <td>{{ data.createdAt | date : "MMM d, y" }}</td>
         <td class="action">
           <app-button [size]="'xs'" icon="pencil" [style]="'secondary'">
             Editar
@@ -28,8 +28,10 @@
       }
     </tbody>
   </table>
-  <app-paginator
-    [tablePageData]="dadosServer"
-    (paginate)="onChangePage($event)"
-  />
+  @if (dataSource) {
+    <app-paginator
+      [tablePageData]="dataServer"
+      (paginate)="onChangePage($event)"
+    />
+  }
 </div>

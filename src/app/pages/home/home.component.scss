@@ -65,6 +65,15 @@ main {
   justify-content: space-between;
 }
 
+.icon-nav {
+  width: 24px;
+  height: 24px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 aside {
   h5 {
     font-size: 0.875rem;
