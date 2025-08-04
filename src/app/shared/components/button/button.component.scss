@@ -15,6 +15,7 @@ button {
 
 }
 
+
 .btn-md {
   padding: 0.75rem 2rem;
   font-size: 1.25rem;
@@ -56,7 +57,6 @@ button {
   }
 }
 
-
 .secondary {
   background: var(--purple-300);
   color: white;
@@ -68,6 +68,20 @@ button {
     box-shadow: 0px 0px 10px var(--purple-500);
   }
 }
+
+.tertiary {
+  background: var(--dark-purple-800);
+  color: var(--dark-purple-300);
+
+  &:hover {
+    background: var( --dark-purple-700);
+  }
+  &:active {
+    box-shadow: 0px 0px 10px var( --dark-purple-700);
+  }
+}
+
+
 
 .error {
   background: var(--red-500);
@@ -82,11 +96,11 @@ button {
 }
 
 .active {
-  background: var(--green-300);
+  background: var(--green-700);
   color: white;
 
   &:hover {
-    background: var(--green-500);
+    filter: brightness(.8);
   }
   &:active {
     box-shadow: 0px 0px 10px var(--green-500);

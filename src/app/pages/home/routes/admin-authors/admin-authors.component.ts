@@ -9,7 +9,7 @@ import { ProfileComponent } from '../../../../shared/components/profile/profile.
 @Component({
   selector: 'app-admin-authors',
   standalone: true,
-  imports: [ButtonComponent, PaginatorComponent, DatePipe, ProfileComponent],
+  imports: [ButtonComponent, PaginatorComponent, ProfileComponent],
   templateUrl: './admin-authors.component.html',
   styleUrl: './admin-authors.component.scss',
 })
@@ -33,6 +33,9 @@ export class AdminAuthorsComponent implements AfterContentInit {
         tap((data) => {
           this.dataSource = data;
           this.dataServer = data;
+          console.log(this.dataSource);
+          console.log(this.dataServer);
+
         })
       )
       .subscribe();
@@ -40,5 +43,13 @@ export class AdminAuthorsComponent implements AfterContentInit {
 
   onChangePage(tableDataOutput: any[]) {
     this.dataSource = tableDataOutput;
+    this.cd.detectChanges();
+  }
+
+  deleteAuthor(email: string) {
+    console.log(email);
+    this.adminServices.deleteAuthor(email).subscribe(() => {
+      this.ngOnInit();
+    });
   }
 }

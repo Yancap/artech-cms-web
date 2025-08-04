@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, DoCheck, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, DoCheck, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { SvgComponent } from '../svg/svg.component';
 
 @Component({
@@ -8,7 +8,7 @@ import { SvgComponent } from '../svg/svg.component';
   templateUrl: './paginator.component.html',
   styleUrl: './paginator.component.scss',
 })
-export class PaginatorComponent implements OnInit, AfterViewInit {
+export class PaginatorComponent implements OnInit, AfterContentInit {
   // [tamanho da página, quantidade de indice, pulo entre cada seta]
   //pageConfig: [number, number, number] = [3, 3, 5];
   pagePointer = 0;
@@ -55,7 +55,7 @@ export class PaginatorComponent implements OnInit, AfterViewInit {
 
   }
 
-  ngAfterViewInit(): void {
+  ngAfterContentInit(): void {
     this.paginate.emit(this.tableDataOutput[this.pagePointer])
   }
   click(currentIndex: number) {

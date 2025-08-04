@@ -1,0 +1,68 @@
+div.container-editor {
+  background-color: var(--dark-purple-800);
+  border-radius: 0.25rem;
+
+  div.editor {
+    border: none;
+    outline: none;
+    font-family: "Ubuntu", sans-serif;
+    outline: .5px solid var(--purple-500);
+    border: 0.25px solid var(--purple-500);
+    color: var(--dark-purple-100);
+    cursor: pointer;
+  }
+  div.editor::placeholder {
+    color: var(--dark-purple-400);
+  }
+  div.editor:focus {
+    outline: 1.5px solid var(--purple-700);
+    border: 0.5px solid var(--purple-700);
+    color: var(--dark-purple-100);
+
+    cursor: text;
+  }
+}
+
+.toolbar {
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+.toolbar button {
+  margin-right: 5px;
+}
+
+.editor {
+  min-height: 200px;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+// div.editor {
+//   background-color: var(--dark-purple-800);
+//   border: none;
+//   border-radius: 0.25rem;
+//   outline: none;
+//   font-family: "Ubuntu", sans-serif;
+// }
+// div.editor::placeholder {
+//   color: var(--dark-purple-400);
+// }
+// div.editor:focus {
+//   outline: 1.5px solid var(--purple-700);
+//   border: 0.25px solid var(--purple-500);
+//   color: var(--dark-purple-100);
+// }
+
+li {
+  margin-left: 1rem;
+}
+:host {
+  ::ng-deep {
+    div.editor {
+      li {
+        margin-left: 1rem;
+      }
+    }
+  }
+}

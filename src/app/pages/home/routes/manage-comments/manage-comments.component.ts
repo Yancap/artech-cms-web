@@ -1,92 +1,10 @@
 import { AfterContentInit, ChangeDetectorRef, Component } from '@angular/core';
 import { PaginatorComponent } from '../../../../shared/components/paginator/paginator.component';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
+import { ArticleService } from '../../../../shared/services/article/article.service';
+import { ArticleState } from '../../../../shared/models/enums/article-state.enums';
+import { map, tap } from 'rxjs';
 
-const mockDadosTabela = [
-  {
-    title: 'Titulo do artigo sobre o Front-End e suas tecnologias',
-    category: 'Front-end',
-    comments: [
-      {
-        id: 1,
-        text: 'Comentário 1',
-        createdAt: '07/05/2025',
-        userName: 'John Doe',
-      },
-    ],
-  },
-  {
-    title: 'Titulo do artigo sobre o Front-End e suas tecnologias',
-    category: 'Front-end',
-    comments: [],
-  },
-  {
-    title: 'Titulo do artigo sobre o Front-End e suas tecnologias',
-    category: 'Front-end',
-    comments: [
-      {
-        id: 1,
-        text: 'Comentário 1',
-        createdAt: '07/05/2025',
-        userName: 'John Doe',
-      },
-      {
-        id: 2,
-        text: 'Comentário 2',
-        createdAt: '07/05/2025',
-        userName: 'John Doe',
-      },
-      {
-        id: 3,
-        text: 'Comentário 3',
-        createdAt: '07/05/2025',
-        userName: 'John Doe',
-      },
-      {
-        id: 4,
-        text: 'Comentário 4',
-        createdAt: '07/05/2025',
-        userName: 'John Doe',
-      },
-      {
-        id: 5,
-        text: 'Comentário 5',
-        createdAt: '07/05/2025',
-        userName: 'John Doe',
-      },
-      {
-        id: 6,
-        text: 'Comentário 6',
-        createdAt: '07/05/2025',
-        userName: 'John Doe',
-      },
-      {
-        id: 7,
-        text: 'Comentário 7',
-        createdAt: '07/05/2025',
-        userName: 'John Doe',
-      },
-    ],
-  },
-  {
-    title: 'Titulo do artigo sobre o Front-End e suas tecnologias',
-    category: 'Front-end',
-    comments: [
-      {
-        id: 2,
-        text: 'Comentário 2',
-        createdAt: '07/05/2025',
-        userName: 'John Doe',
-      },
-      {
-        id: 2,
-        text: 'Comentário 2',
-        createdAt: '07/05/2025',
-        userName: 'John Doe',
-      },
-    ],
-  },
-];
 @Component({
   selector: 'app-manage-comments',
   standalone: true,
@@ -94,12 +12,47 @@ const mockDadosTabela = [
   templateUrl: './manage-comments.component.html',
   styleUrl: './manage-comments.component.scss',
 })
-export class ManageCommentsComponent  {
-  public dataSource = mockDadosTabela;
-  public dadosServer = mockDadosTabela;
+export class ManageCommentsComponent {
+  public dataSource: {
+    title: string;
+    category: string;
+    commentsLength: number;
+  }[] = [];
+  public dataServer: {
+    title: string;
+    category: string;
+    commentsLength: number;
+  }[] = [];
 
+  constructor(
+    private articleService: ArticleService,
+    private cd: ChangeDetectorRef
+  ) {}
+
+  ngAfterContentInit(): void {
+    this.cd.detectChanges();
+  }
+  ngOnInit(): void {
+    this.articleService
+      .getArticleByState(ArticleState.active)
+      .pipe(
+        map(({ articlesList }) => {
+          return articlesList.map((data) => ({
+            title: data.title,
+            category: data.category,
+            commentsLength: data.comments.length,
+          }));
+        }),
+        tap((data) => {
+          this.dataSource = data;
+          this.dataServer = data;
+        })
+      )
+      .subscribe();
+  }
 
   onChangePage(tableDataOutput: any[]) {
     this.dataSource = tableDataOutput;
+    this.cd.detectChanges();
   }
 }

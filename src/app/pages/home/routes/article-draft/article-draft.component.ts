@@ -1,9 +1,15 @@
-import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  AfterContentInit,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { PaginatorComponent } from '../../../../shared/components/paginator/paginator.component';
 import { ArticleService } from '../../../../shared/services/article/article.service';
 import { ArticleState } from '../../../../shared/models/enums/article-state.enums';
-import { tap } from 'rxjs';
+import { map, tap } from 'rxjs';
+import { Router } from '@angular/router';
 const mockDadosTabela = [
   {
     title: 'Titulo do artigo sobre o Front-End e suas tecnologias',
@@ -44,8 +50,16 @@ export class ArticleDraftComponent implements OnInit, AfterContentInit {
 
   constructor(
     private articleService: ArticleService,
+    private router: Router,
     private cd: ChangeDetectorRef
   ) {}
+
+  editArticle(slug: string) {
+    this.router.navigateByUrl(`/article/${slug}`);
+  }
+  createArticle() {
+    this.router.navigateByUrl(`/article/`);
+  }
 
   ngAfterContentInit(): void {
     this.cd.detectChanges();
@@ -54,6 +68,14 @@ export class ArticleDraftComponent implements OnInit, AfterContentInit {
     this.articleService
       .getArticleByState(ArticleState.draft)
       .pipe(
+        map(({ articlesList }) => {
+          return articlesList.map((data) => ({
+            slug: data.slug,
+            title: data.title,
+            category: data['category'],
+            createdAt: data.createdAt,
+          }));
+        }),
         tap((data) => {
           this.dataSource = data;
           this.dataServer = data;
@@ -63,5 +85,6 @@ export class ArticleDraftComponent implements OnInit, AfterContentInit {
   }
   onChangePage(tableDataOutput: any[]) {
     this.dataSource = tableDataOutput;
+    this.cd.detectChanges();
   }
 }

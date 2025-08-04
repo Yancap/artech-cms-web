@@ -1,5 +1,10 @@
 import { DatePipe } from '@angular/common';
-import { AfterContentInit, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import {
+  AfterContentInit,
+  ChangeDetectorRef,
+  Component,
+  OnInit,
+} from '@angular/core';
 import { PaginatorComponent } from '../../../../shared/components/paginator/paginator.component';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
 import { AdminService } from '../../../../shared/services/admin/admin.service';
@@ -25,6 +30,14 @@ export class AdminArticlesComponent implements OnInit, AfterContentInit {
     this.cd.detectChanges();
   }
 
+  deleteArticle(data: IArticleForTable) {
+    this.adminServices
+      .deleteArticle({ slug: data['slug'], email: data['authorEmail'] })
+      .subscribe(() => {
+        this.ngOnInit();
+      });
+  }
+
   ngOnInit(): void {
     this.adminServices
       .getAllArticles()
@@ -39,5 +52,6 @@ export class AdminArticlesComponent implements OnInit, AfterContentInit {
 
   onChangePage(tableDataOutput: any[]) {
     this.dataSource = tableDataOutput;
+    this.cd.detectChanges();
   }
 }

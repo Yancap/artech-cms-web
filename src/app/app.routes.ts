@@ -9,6 +9,7 @@ import { authGuard } from './shared/guards/auth/auth.guard';
 import { AdminAuthorsComponent } from './pages/home/routes/admin-authors/admin-authors.component';
 import { AdminArticlesComponent } from './pages/home/routes/admin-articles/admin-articles.component';
 import { adminGuard } from './shared/guards/admin/admin.guard';
+import { HandleArticleComponent } from './pages/handle-article/handle-article.component';
 
 export const routes: Routes = [
   {
@@ -23,38 +24,50 @@ export const routes: Routes = [
   {
     component: HomeComponent,
     path: '',
-    canMatch: [authGuard],
+    canActivate: [authGuard],
     children: [
       {
         component: ArticleActiveComponent,
         path: 'article/active',
-        canMatch: [authGuard],
+        canActivate: [authGuard],
       },
       {
         component: ArticleDraftComponent,
         path: 'article/draft',
-        canMatch: [authGuard],
+        canActivate: [authGuard],
       },
       {
         component: ArticleDisabledComponent,
         path: 'article/disabled',
-        canMatch: [authGuard],
+        canActivate: [authGuard],
       },
       {
         component: ManageCommentsComponent,
         path: 'manage/comment',
-        canMatch: [authGuard],
+        canActivate: [authGuard],
       },
       {
         component: AdminAuthorsComponent,
         path: 'admin/authors',
-        canMatch: [authGuard, adminGuard],
+        canActivate: [authGuard],
+        canMatch: [adminGuard],
       },
       {
         component: AdminArticlesComponent,
         path: 'admin/articles',
-        canMatch: [authGuard, adminGuard],
+        canActivate: [authGuard],
+        canMatch: [adminGuard],
       },
     ],
+  },
+  {
+    component: HandleArticleComponent,
+    path: 'article/:slug',
+    canActivate: [authGuard]
+  },
+  {
+    component: HandleArticleComponent,
+    path: 'article',
+    canActivate: [authGuard]
   },
 ];

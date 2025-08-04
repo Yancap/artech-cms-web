@@ -19,8 +19,10 @@ export class AdminService {
       .pipe(
         map(({ articlesList }) => {
           return articlesList.map((data) => ({
+            slug: data.slug,
             title: data.title,
             authorName: data.author.name,
+            authorEmail: data.author.email,
             createdAt: data.createdAt,
           }));
         })
@@ -34,5 +36,27 @@ export class AdminService {
         headers: { Authorization: `Bearer ${token}` },
       })
       .pipe(map(({ authorsList }) => authorsList));
+  }
+
+  public deleteAuthor(email: string) {
+    const token = this.tokenService.getUserToken();
+    return this.http.delete<IAuthorResponse>(
+      environment.apiUrl + `/admin/manage/author`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+        body: { email },
+      }
+    );
+  }
+
+  public deleteArticle(data: { email: string; slug: string }) {
+    const token = this.tokenService.getUserToken();
+    return this.http.delete<IAuthorResponse>(
+      environment.apiUrl + `/admin/manage/articles`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+        body: data,
+      }
+    );
   }
 }

@@ -1,14 +1,19 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-
+import { SvgComponent } from '../svg/svg.component';
 
 @Component({
   selector: 'app-input-text',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, SvgComponent],
   template: `
-    <div [class]="'input-' + size">
-      <label for="">{{ label }}</label>
+    <div [class]="'input-' + size + ' ' + style + ' type-' + type">
+      @if(type === 'file') {
+        <span>{{ label }}</span>
+        <label [for]="label"> <app-svg name="add" /></label>
+      }@else {
+      <label [for]="label"> {{ label }}</label>
+      }
       <input
         [type]="type"
         [id]="label"
@@ -22,6 +27,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class InputTextComponent {
   @Input() public label: string = '';
+  @Input() public style: 'normal' | 'alternative' = 'normal';
   @Input() public placeholder: string = '';
   @Input() public type: string = 'text';
   @Input() public size: 'sm' | 'md' | 'lg' = 'md';

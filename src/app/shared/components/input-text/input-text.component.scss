@@ -4,45 +4,114 @@ div {
   gap: 0.5rem;
 }
 
-label {
-  font-weight: 500;
-  color: white;
-}
-input {
-  background-color: var(--dark-purple-900);
-  border: .25px solid var(--purple-500);
-  border-radius: .25rem;
-  color: var(--dark-purple-100);
-  outline: none;
-}
-input::placeholder {
-  color: var(--dark-purple-400);
-}
-
-
-input:focus {
-  outline: 1.5px solid var(--purple-700);
-}
-
-
-.input-md {
+div.normal {
   label {
-    font-size: 1.25rem;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark-purple-400);
+  }
+  input {
+    background-color: var(--dark-purple-900);
+    border: 0.25px solid var(--purple-500);
+    border-radius: 0.25rem;
+    color: var(--dark-purple-100);
+    outline: none;
+  }
+  input::placeholder {
+    color: var(--dark-purple-400);
+  }
+  input:focus {
+    outline: 1.5px solid var(--purple-700);
   }
 
-  input {
-    padding: 0.75rem 0.875rem;
-    font-size: 1rem;
+  &.input-md {
+    label {
+      font-size: 1.25rem;
+    }
+
+    input {
+      padding: 0.75rem 0.875rem;
+      font-size: 1rem;
+    }
+  }
+
+  &.input-sm {
+    label {
+      font-size: 1rem;
+    }
+
+    input {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+    }
   }
 }
 
-.input-sm {
+div.alternative {
   label {
-    font-size: 1rem;
+    font-style: "Poppins", sans-serif;
+    font-weight: 800;
+    color: var(--dark-purple-400);
+  }
+  input {
+    background-color: var(--dark-purple-800);
+    border: none;
+    border-radius: 0.25rem;
+    outline: none;
+  }
+  input::placeholder {
+    color: var(--dark-purple-400);
+  }
+  input:focus {
+    outline: 1.5px solid var(--purple-700);
+    border: 0.25px solid var(--purple-500);
+    color: var(--dark-purple-100);
   }
 
-  input {
-    padding: 0.5rem 0.75rem;
-    font-size: 0.875rem;
+  &.input-md {
+    label {
+      font-size: 1rem;
+    }
+
+    input {
+      padding: 0.75rem 0.875rem;
+      font-size: 1rem;
+    }
+  }
+
+  &.input-sm {
+    label {
+      font-size: 0.875rem;
+    }
+
+    input {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+    }
+  }
+}
+
+div.type-file {
+  /* Esconde o input */
+  input[type="file"] {
+    display: none;
+  }
+  &.alternative {
+    label {
+      background-color: var(--dark-purple-800);
+      border: none;
+      border-radius: 0.25rem;
+      outline: none;
+      cursor: pointer;
+      height: 30rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    span {
+      font-style: "Poppins", sans-serif;
+      font-weight: 800;
+      color: var(--dark-purple-400);
+    }
   }
 }

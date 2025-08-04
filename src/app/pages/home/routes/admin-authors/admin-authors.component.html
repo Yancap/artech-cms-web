@@ -34,7 +34,12 @@
           }}
         </td>
         <td class="action">
-          <app-button [size]="'xs'" icon="trash" [style]="'error'">
+          <app-button
+            [size]="'xs'"
+            icon="trash"
+            [style]="'error'"
+            (click)="deleteAuthor(data.email)"
+          >
             Excluir
           </app-button>
         </td>
@@ -42,7 +47,7 @@
       }
     </tbody>
   </table>
-  @if (dataSource) {
+  @if (dataSource.length > 0) {
   <app-paginator
     [tablePageData]="dataServer"
     (paginate)="onChangePage($event)"

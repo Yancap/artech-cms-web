@@ -1,0 +1,23 @@
+<div class="container-editor">
+  <div class="toolbar">
+    <button (click)="applyFormat($event, 'strong')"><b>B</b></button>
+    <button (click)="applyFormat($event, 'em')"><i>I</i></button>
+    <button (click)="applyFormat($event, 'u')"><u>U</u></button>
+    <button (click)="applyFormat($event, 'h1')">H1</button>
+    <button (click)="applyFormat($event, 'h2')">H2</button>
+    <button (click)="applyFormat($event, 'h3')">H3</button>
+    <button (click)="applyFormat($event, 'h4')">H4</button>
+    <button (click)="applyFormat($event, 'h5')">H5</button>
+    <button (click)="applyFormat($event, 'h6')">H6</button>
+    <button (click)="createLink($event)">🔗</button>
+    <button (click)="applyUnorderedList($event)">• Lista</button>
+    <button (click)="applyOrderedList($event)">1. Lista</button>
+  </div>
+
+  <div
+    class="editor"
+    contenteditable="true"
+    #editorRef
+    (input)="onInput()"
+  ></div>
+</div>

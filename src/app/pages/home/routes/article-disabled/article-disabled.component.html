@@ -19,16 +19,22 @@
         <td>{{ data["category"] }}</td>
         <td>{{ data.createdAt | date : "MMM d, y" }}</td>
         <td class="action">
-          <app-button [size]="'xs'" [style]="'active'">Publicar</app-button>
+          <app-button
+            [size]="'xs'"
+            [style]="'active'"
+            (click)="setStateToActive(data.slug)"
+          >
+            Publicar
+          </app-button>
         </td>
       </tr>
       }
     </tbody>
   </table>
   @if (dataSource) {
-    <app-paginator
-      [tablePageData]="dataServer"
-      (paginate)="onChangePage($event)"
-    />
+  <app-paginator
+    [tablePageData]="dataServer"
+    (paginate)="onChangePage($event)"
+  />
   }
 </div>

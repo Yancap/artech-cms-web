@@ -14,18 +14,25 @@ export class ArticleService {
 
   public getArticleByState(state: ArticleState) {
     const token = this.tokenService.getUserToken();
-    return this.http
-      .get<IArticleResponse>(environment.apiUrl + `/article/${state}`, {
+    return this.http.get<IArticleResponse>(
+      environment.apiUrl + `/article/${state}`,
+      {
         headers: { Authorization: `Bearer ${token}` },
-      })
-      .pipe(
-        map(({ articlesList }) => {
-          return articlesList.map((data) => ({
-            title: data.title,
-            category: data['category'],
-            createdAt: data.createdAt,
-          }));
-        })
-      );
+      }
+    );
+  }
+
+  public changeArticleState(slug: string) {
+    const token = this.tokenService.getUserToken();
+    return this.http.patch<IArticleResponse>(
+      environment.apiUrl + `/article/`,
+      {
+        state: ArticleState.active,
+        slug,
+      },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
   }
 }

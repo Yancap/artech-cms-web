@@ -21,6 +21,7 @@ export class ButtonComponent {
   @Input() public style:
     | 'primary'
     | 'secondary'
+    | 'tertiary'
     | 'active'
     | 'error'
     | 'warning' = 'primary';

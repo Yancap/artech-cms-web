@@ -3,6 +3,7 @@ declare interface IArticleResponse {
 }
 
 declare interface IArticleForTable {
+  slug: string;
   title: string;
   createdAt: string;
   [key: string]: string;

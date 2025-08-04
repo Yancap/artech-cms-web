@@ -19,9 +19,9 @@
         <td>{{ data["category"] }}</td>
         <td>
           {{
-            data.comments.length <= 1
-              ? data.comments.length + " Comentário"
-              : data.comments.length + " Comentários"
+            data.commentsLength <= 1
+              ? data.commentsLength + " Comentário"
+              : data.commentsLength + " Comentários"
           }}
         </td>
         <td class="action">
@@ -34,7 +34,7 @@
     </tbody>
   </table>
   <app-paginator
-    [tablePageData]="dadosServer"
+    [tablePageData]="dataServer"
     (paginate)="onChangePage($event)"
   />
 </div>

@@ -1,0 +1,91 @@
+header {
+  margin-bottom: 2rem;
+}
+
+header > div {
+  display: flex;
+  justify-content: space-between;
+  height: 4rem;
+  img {
+    height: auto;
+    width: 200px;
+  }
+}
+
+.nav-container {
+  display: flex;
+  gap: 3rem;
+
+  @media (min-width: 992px) {
+    gap: 4rem;
+  }
+  @media (min-width: 1180px) {
+    gap: 6rem;
+  }
+
+  nav {
+    height: 100%;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .nav-item {
+    height: 100%;
+    display: flex;
+    align-items: center;
+
+    &.active {
+      border-bottom: 2px solid;
+      color: var(--purple-500);
+      a {
+        color: var(--dark-purple-100);
+      }
+    }
+  }
+
+  a {
+    color: var(--dark-purple-300);
+    font-weight: 400;
+    &:hover {
+      color: var(--dark-purple-100);
+    }
+  }
+}
+
+.profile-container {
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+main {
+  display: flex;
+  gap: 4rem;
+  justify-content: space-between;
+}
+
+.form-article {
+  background: var(--dark-purple-900);
+  width: 100%;
+  padding: 5rem 6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.head-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+:host {
+  ::ng-deep {
+    form.form-article {
+      ul {
+        list-style: inherit;
+      }
+    }
+  }
+}

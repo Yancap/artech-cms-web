@@ -1,0 +1,30 @@
+<header class="container">
+  <div>
+    <div class="nav-container">
+      <img src="/logo.svg" alt="" />
+      <nav>
+        <div class="nav-item active">
+          <a href="" routerLink="/">Artigos</a>
+        </div>
+        <div class="nav-item">
+          <a href="">Criar</a>
+        </div>
+      </nav>
+    </div>
+    <div class="profile-container">
+      <app-profile />
+    </div>
+  </div>
+</header>
+<main class="container">
+  <form class="form-article">
+    <div class="head-buttons">
+      <app-button [size]="'sm'" [style]="'tertiary'"> Rascunho </app-button>
+      <app-button [size]="'sm'" [style]="'primary'"> Salvar </app-button>
+    </div>
+    <app-input-text label="Título" [style]="'alternative'" />
+    <app-input-text label="Subtitulo" [style]="'alternative'" />
+    <app-input-text label="Imagem" [style]="'alternative'" type="file"/>
+    <app-textarea-editor [style]="'alternative'" type="textarea" />
+  </form>
+</main>
