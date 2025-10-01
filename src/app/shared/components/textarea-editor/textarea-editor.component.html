@@ -1,17 +1,117 @@
+<label>Texto</label>
 <div class="container-editor">
   <div class="toolbar">
-    <button (click)="applyFormat($event, 'strong')"><b>B</b></button>
-    <button (click)="applyFormat($event, 'em')"><i>I</i></button>
-    <button (click)="applyFormat($event, 'u')"><u>U</u></button>
-    <button (click)="applyFormat($event, 'h1')">H1</button>
-    <button (click)="applyFormat($event, 'h2')">H2</button>
-    <button (click)="applyFormat($event, 'h3')">H3</button>
-    <button (click)="applyFormat($event, 'h4')">H4</button>
-    <button (click)="applyFormat($event, 'h5')">H5</button>
-    <button (click)="applyFormat($event, 'h6')">H6</button>
-    <button (click)="createLink($event)">🔗</button>
-    <button (click)="applyUnorderedList($event)">• Lista</button>
-    <button (click)="applyOrderedList($event)">1. Lista</button>
+    <button
+      [class.active]="formattingStates.bold"
+      (click)="applyFormat($event, 'bold')"
+    >
+      <b>B</b>
+    </button>
+    <button
+      [class.active]="formattingStates.italic"
+      (click)="applyFormat($event, 'italic')"
+    >
+      <i>I</i>
+    </button>
+    <button
+      [class.active]="formattingStates.underline"
+      (click)="applyFormat($event, 'underline')"
+    >
+      <u>U</u>
+    </button>
+    <button
+      [class.active]="headingStates.heading === 'h1'"
+      (click)="applyHeading($event, 'h1')"
+    >
+      H1
+    </button>
+    <button
+      [class.active]="headingStates.heading === 'h2'"
+      (click)="applyHeading($event, 'h2')"
+    >
+      H2
+    </button>
+    <button
+      [class.active]="headingStates.heading === 'h3'"
+      (click)="applyHeading($event, 'h3')"
+    >
+      H3
+    </button>
+    <button
+      [class.active]="headingStates.heading === 'h4'"
+      (click)="applyHeading($event, 'h4')"
+    >
+      H4
+    </button>
+    <button
+      [class.active]="headingStates.heading === 'h5'"
+      (click)="applyHeading($event, 'h5')"
+    >
+      H5
+    </button>
+    <button
+      [class.active]="headingStates.heading === 'h6'"
+      (click)="applyHeading($event, 'h6')"
+    >
+      H6
+    </button>
+    <div class="container-link-format">
+      <button
+        (click)="openLinkFormat($event)"
+        class="btn-link"
+        [class.active]="formattingStates.link"
+      >
+        🔗
+      </button>
+      @if (toggleLinkFormatter) {
+
+      <div class="link-format" #linkFormatterRef>
+        <div>
+          <input
+            type="text"
+            [value]="textLinkSelected"
+            placeholder="Insira o texto"
+            (click)="handleInputLinkDisabled($event)"
+            #inputLinkTextRef
+          />
+          <input
+            type="text"
+            [value]="hrefLinkSelected"
+            placeholder="Insira o link"
+            (mousedown)="clickDownSetLink($event)"
+            #inputLinkHrefRef
+          />
+        </div>
+        <app-button
+          [size]="'xs'"
+          [style]="'tertiary'"
+          (click)="removeLink($event)"
+        >
+          Remover
+        </app-button>
+        <app-button
+          [size]="'xs'"
+          [style]="'primary'"
+          (click)="createLink($event)"
+        >
+          Aplicar
+        </app-button>
+      </div>
+      <div class="wrapper-link-format"></div>
+      }
+    </div>
+    <button
+      [class.active]="formattingStates.ul && !formattingStates.ol"
+      (click)="applyUnorderedList($event)"
+    >
+      • Lista
+    </button>
+    <button
+      [class.active]="!formattingStates.ul && formattingStates.ol"
+      (click)="applyOrderedList($event)"
+    >
+      1. Lista
+    </button>
   </div>
 
   <div
@@ -19,5 +119,7 @@
     contenteditable="true"
     #editorRef
     (input)="onInput()"
+    (mouseup)="handleSelection($event)"
+    (keyup)="handleKeyUp($event)"
   ></div>
 </div>

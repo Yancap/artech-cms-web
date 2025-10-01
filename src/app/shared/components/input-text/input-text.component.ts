@@ -37,8 +37,6 @@ export class InputTextComponent {
   valueInput!: string;
 
   public getValue(event: string) {
-    console.log(event);
-
     this.value.emit(event);
   }
 }

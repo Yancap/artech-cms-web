@@ -65,7 +65,7 @@ export class LoginComponent implements OnInit {
         first(),
         concatMap(() => {
           const token = this.tokenService.getUserToken();
-          if (token) return this.router.navigateByUrl('/article/active');
+          if (token) return this.router.navigateByUrl('/articles/active');
           return of();
         })
       )

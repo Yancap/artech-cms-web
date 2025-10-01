@@ -115,6 +115,14 @@ aside {
   flex-grow: 1;
 }
 
+h5 {
+  font-family: "Poppins", sans-serif;
+}
+
+ul {
+  list-style: none;
+}
+
 :host {
   ::ng-deep {
     .aside-container-nav {

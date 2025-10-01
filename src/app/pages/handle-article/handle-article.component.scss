@@ -82,10 +82,10 @@ main {
 
 :host {
   ::ng-deep {
-    form.form-article {
-      ul {
-        list-style: inherit;
-      }
-    }
+    // form.form-article {
+    //   ul {
+    //     list-style: inherit;
+    //   }
+    // }
   }
 }

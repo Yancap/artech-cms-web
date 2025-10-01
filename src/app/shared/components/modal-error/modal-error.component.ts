@@ -20,7 +20,6 @@ export class ModalErrorComponent {
 
 
   closeModal() {
-    console.log("Clock");
 
     this.componentRef = this.viewContainerRef.createComponent(ModalErrorComponent);
     this.componentRef.destroy();

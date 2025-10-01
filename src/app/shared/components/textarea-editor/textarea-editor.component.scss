@@ -1,68 +1,174 @@
+label {
+  font-style: "Poppins", sans-serif;
+  font-weight: 800;
+  color: var(--dark-purple-400);
+  margin-bottom: .5rem;
+  display: inline-block;
+}
 div.container-editor {
   background-color: var(--dark-purple-800);
   border-radius: 0.25rem;
 
   div.editor {
-    border: none;
+    //border: .5px solid var(--purple-700);
+
+    min-height: 200px;
     outline: none;
     font-family: "Ubuntu", sans-serif;
-    outline: .5px solid var(--purple-500);
-    border: 0.25px solid var(--purple-500);
     color: var(--dark-purple-100);
     cursor: pointer;
+    position: relative;
+    z-index: 5;
+    border-radius: 0.25rem;
+    max-height: 1000px;
+    overflow: auto;
+
+    padding: 10px;
+
+    &::-webkit-scrollbar-track {
+      background-color: var(--dark-purple-700);
+    }
+    &::-webkit-scrollbar {
+      width: 6px;
+      background: var(--dark-purple-700);
+    }
+    &::-webkit-scrollbar-thumb {
+      background: var(--purple-300);
+      height: 16px;
+      border-radius: 1000px;
+      border: 1px solid var(--dark-purple-700);
+    }
   }
   div.editor::placeholder {
     color: var(--dark-purple-400);
   }
   div.editor:focus {
     outline: 1.5px solid var(--purple-700);
-    border: 0.5px solid var(--purple-700);
+    border: 2px solid var(--purple-700);
     color: var(--dark-purple-100);
+    border-radius: 0.25rem;
 
     cursor: text;
   }
 }
 
 .toolbar {
-  border: 1px solid #ccc;
-  padding: 5px;
+  border-radius: 0.25rem 0.25rem 0 0;
+  padding: 0.15rem 1rem;
+  display: flex;
+  height: 2.5rem;
+  background: var(--dark-purple-700);
+
+  button {
+    height: 100%;
+    padding: 0.25rem 0.45rem;
+    font-size: 1rem;
+    border: 2px solid var(--dark-purple-700);
+    min-width: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Noto Serif", serif;
+    background: var(--dark-purple-100);
+    color: var(--dark-purple-900);
+    outline: none;
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: .25rem;
+    transition: .2s;
+    b {
+      font-weight: 900;
+    }
+  }
+
+  button:hover{
+
+    background: var(--dark-purple-200);
+  }
+
+  button.active {
+    background: var(--purple-300);
+    border: 1px solid var(--purple-500);
+    //color: var(--purple-700);
+  }
 }
 
-.toolbar button {
-  margin-right: 5px;
-}
-
-.editor {
-  min-height: 200px;
-  border: 1px solid #ccc;
-  padding: 10px;
-}
-
-// div.editor {
-//   background-color: var(--dark-purple-800);
-//   border: none;
-//   border-radius: 0.25rem;
-//   outline: none;
-//   font-family: "Ubuntu", sans-serif;
-// }
-// div.editor::placeholder {
-//   color: var(--dark-purple-400);
-// }
-// div.editor:focus {
-//   outline: 1.5px solid var(--purple-700);
-//   border: 0.25px solid var(--purple-500);
-//   color: var(--dark-purple-100);
-// }
-
-li {
-  margin-left: 1rem;
-}
 :host {
   ::ng-deep {
     div.editor {
-      li {
+      ul,
+      ol {
         margin-left: 1rem;
       }
+
+      .subselection {
+        background-color: #5653f454;
+      }
     }
+  }
+}
+
+.btn-link {
+  position: relative;
+}
+
+.container-link-format {
+  position: relative;
+  display: block;
+}
+
+.wrapper-link-format {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
+}
+
+.link-format {
+  z-index: 20;
+  border: 0.5px solid var(--purple-300);
+  background-color: var(--dark-purple-800);
+  border-radius: 0.5rem;
+  position: absolute;
+  bottom: 1.5rem;
+  left: 0;
+  padding: 1.25rem;
+  display: flex;
+  gap: 1rem;
+  box-shadow: 3px 3px 10px var(--dark-purple-900);
+
+  div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  input {
+    background-color: var(--dark-purple-800);
+    border-radius: 0.15rem;
+    outline: none;
+    height: 1.5rem;
+    padding: 0.5rem 0.25rem;
+    border: 0.2px solid var(--purple-300);
+    color: var(--dark-purple-200);
+  }
+  input::placeholder {
+    color: var(--dark-purple-400);
+  }
+  input:focus {
+    outline: 0.25px solid var(--purple-700);
+    color: var(--dark-purple-100);
+  }
+
+  input:disabled {
+    border: none;
+    background-color: var(--dark-purple-700);
+    color: var(--dark-purple-400);
+  }
+
+  app-button {
+    align-self: flex-end;
   }
 }

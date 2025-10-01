@@ -1,0 +1,236 @@
+div.container-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 30rem;
+}
+
+div.container-select {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  position: relative;
+}
+
+div.container-input {
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+  z-index: 5;
+  app-svg {
+    transform: rotate(180deg);
+    position: absolute;
+
+    transition: transform 0.5s ease;
+  }
+}
+
+div.opened {
+  app-svg {
+    transform: rotate(90deg);
+  }
+}
+
+ul {
+  list-style: none;
+
+  display: flex;
+  flex-direction: column;
+
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  max-height: 0;
+  z-index: 5;
+  overflow: auto;
+
+  transition: max-height 0.5s ease, opacity 0.5s ease-in-out;
+  opacity: 0;
+
+  &.open {
+    max-height: 200px;
+
+    opacity: 1;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: var(--dark-purple-800);
+  }
+  &::-webkit-scrollbar {
+    width: 6px;
+    background: var(--dark-purple-800);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--purple-500);
+    height: 16px;
+    border-radius: 1000px;
+    border: 3px solid var(--dark-purple-800);
+  }
+}
+
+li {
+  text-transform: capitalize;
+  font-family: "Poppins", sans-serif;
+
+  &:hover {
+    cursor: pointer;
+    font-weight: 600;
+  }
+}
+
+div.normal {
+  label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--dark-purple-400);
+  }
+  input,
+  div.input-disabled {
+    background-color: var(--dark-purple-900);
+    border: 0.25px solid var(--purple-500);
+    border-radius: 0.25rem;
+    color: var(--dark-purple-100);
+    outline: none;
+  }
+
+  ul {
+    background-color: var(--dark-purple-900);
+    border: 0.25px solid var(--purple-500);
+    border-radius: 0.25rem;
+    color: var(--dark-purple-100);
+  }
+
+  &.input-md {
+    label {
+      font-size: 1.25rem;
+    }
+
+    input,
+    div.input-disabled {
+      min-height: 42.8px;
+    }
+
+    input::placeholder {
+      color: var(--dark-purple-400);
+    }
+    input:focus {
+      outline: 1.5px solid var(--purple-700);
+    }
+    input,
+    div.input-disabled,
+    ul {
+      padding: 0.75rem 0.875rem;
+      font-size: 1rem;
+      gap: 0.75rem;
+    }
+  }
+
+  &.input-sm {
+    label {
+      font-size: 1rem;
+    }
+
+    input,
+    div.input-disabled,
+    ul {
+      padding: 0.5rem 0.75rem;
+      font-size: 0.875rem;
+      gap: 0.5rem;
+    }
+  }
+}
+
+div.alternative {
+  label {
+    font-style: "Poppins", sans-serif;
+    font-weight: 800;
+    color: var(--dark-purple-400);
+  }
+  input,
+  div.input-disabled {
+    min-height: 42.8px;
+    font-family: "Ubuntu", sans-serif;
+    text-transform: capitalize;
+  }
+
+  input::placeholder {
+    color: var(--dark-purple-400);
+  }
+  input:focus {
+    outline: 1.5px solid var(--purple-700);
+    border: 0.25px solid var(--purple-500);
+    color: var(--dark-purple-100);
+  }
+
+  input,
+  div.input-disabled,
+  ul {
+    background-color: var(--dark-purple-800);
+    border: none;
+    border-radius: 0.25rem;
+    outline: none;
+    color: var(--dark-purple-100);
+    width: 100%;
+    cursor: pointer;
+  }
+
+  .add-category {
+    color: var(--dark-purple-400);
+    font-weight: 600;
+    &:hover {
+      font-weight: 700;
+    }
+  }
+
+  &.input-md {
+    label {
+      font-size: 1rem;
+    }
+
+    input,
+    div.input-disabled,
+    ul {
+      font-size: 1rem;
+      gap: 0.75rem;
+      padding: 0.75rem 0.875rem;
+    }
+
+    app-svg {
+      right: 0.875rem;
+    }
+  }
+
+  &.input-sm {
+    label {
+      font-size: 0.875rem;
+    }
+
+    input,
+    div.input-disabled,
+    ul {
+      font-size: 0.875rem;
+      gap: 0.5rem;
+      padding: 0.5rem 0.75rem;
+    }
+
+    app-svg {
+      right: 0.75rem;
+    }
+  }
+}
+
+input {
+  cursor: initial !important;
+}
+
+:host {
+  ::ng-deep {
+    path {
+      fill: var(--dark-purple-400);
+    }
+  }
+}

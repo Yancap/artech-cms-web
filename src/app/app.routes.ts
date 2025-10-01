@@ -14,7 +14,7 @@ import { HandleArticleComponent } from './pages/handle-article/handle-article.co
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'article/active',
+    redirectTo: 'articles/active',
     pathMatch: 'prefix',
   },
   {
@@ -28,17 +28,17 @@ export const routes: Routes = [
     children: [
       {
         component: ArticleActiveComponent,
-        path: 'article/active',
+        path: 'articles/active',
         canActivate: [authGuard],
       },
       {
         component: ArticleDraftComponent,
-        path: 'article/draft',
+        path: 'articles/draft',
         canActivate: [authGuard],
       },
       {
         component: ArticleDisabledComponent,
-        path: 'article/disabled',
+        path: 'articles/disabled',
         canActivate: [authGuard],
       },
       {

@@ -19,12 +19,15 @@
 <main class="container">
   <form class="form-article">
     <div class="head-buttons">
-      <app-button [size]="'sm'" [style]="'tertiary'"> Rascunho </app-button>
-      <app-button [size]="'sm'" [style]="'primary'"> Salvar </app-button>
+      <app-button [size]="'sm'" [style]="'tertiary'" (click)="sendArticleDraft($event)"> Rascunho </app-button>
+      <app-button [size]="'sm'" [style]="'primary'" (click)="publishArticle($event)"> Salvar </app-button>
     </div>
-    <app-input-text label="Título" [style]="'alternative'" />
-    <app-input-text label="Subtitulo" [style]="'alternative'" />
-    <app-input-text label="Imagem" [style]="'alternative'" type="file"/>
-    <app-textarea-editor [style]="'alternative'" type="textarea" />
+    <app-input-text label="Título" [style]="'alternative'" (value)="getValue($event, 'title')"/>
+    <app-input-text label="Subtitulo" [style]="'alternative'" (value)="getValue($event, 'subtitle')"/>
+    <app-input-text label="Imagem" [style]="'alternative'" type="file" (value)="getValue($event, 'imageBlob')"/>
+    <app-textarea-editor [style]="'alternative'" type="textarea" (value)="getValue($event, 'text')"/>
+    <app-input-select label="Category" [style]="'alternative'" [options]="categoriesList" (value)="getValue($event, 'category')"/>
+    <app-input-add label="Tags" [style]="'alternative'" (value)="getValue($event, 'tags')"/>
+    <app-input-link label="Creditos" [style]="'alternative'"  (value)="getValue($event, 'credits')"/>
   </form>
 </main>

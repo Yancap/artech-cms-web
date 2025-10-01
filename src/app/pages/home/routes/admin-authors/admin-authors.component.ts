@@ -33,8 +33,6 @@ export class AdminAuthorsComponent implements AfterContentInit {
         tap((data) => {
           this.dataSource = data;
           this.dataServer = data;
-          console.log(this.dataSource);
-          console.log(this.dataServer);
 
         })
       )
@@ -47,7 +45,6 @@ export class AdminAuthorsComponent implements AfterContentInit {
   }
 
   deleteAuthor(email: string) {
-    console.log(email);
     this.adminServices.deleteAuthor(email).subscribe(() => {
       this.ngOnInit();
     });
