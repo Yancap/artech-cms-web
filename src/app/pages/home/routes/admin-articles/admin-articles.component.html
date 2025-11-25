@@ -3,35 +3,42 @@
     <h1>Todos os Artigos</h1>
     <!-- TODO: Fazer o filtro -->
   </header>
-  <table class="table-artech">
-    <thead>
-      <tr>
-        <th>Título</th>
-        <th>Autor</th>
-        <th>Data de publicação</th>
-        <th class="action"></th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (data of dataSource; track $index) {
+  <div class="container-table">
+    <table class="table-artech">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Autor</th>
+          <th>Data de publicação</th>
+          <th class="action"></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (data of dataSource; track $index) {
 
-      <tr>
-        <td>{{ data.title }}</td>
-        <td>{{ data["authorName"] }}</td>
-        <td>{{ data.createdAt | date : "MMM d, y" }}</td>
-        <td class="action">
-          <app-button [size]="'xs'" icon="trash" [style]="'error'" (click)="deleteArticle(data)">
-            Excluir
-          </app-button>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
+        <tr>
+          <td>{{ data.title }}</td>
+          <td>{{ data["authorName"] }}</td>
+          <td>{{ data.createdAt | date : "MMM d, y" }}</td>
+          <td class="action">
+            <app-button
+              [size]="'xs'"
+              icon="trash"
+              [style]="'error'"
+              (click)="deleteArticle(data)"
+            >
+              Excluir
+            </app-button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
   @if (dataSource) {
-    <app-paginator
-      [tablePageData]="dataServer"
-      (paginate)="onChangePage($event)"
-    />
+  <app-paginator
+    [tablePageData]="dataServer"
+    (paginate)="onChangePage($event)"
+  />
   }
 </div>

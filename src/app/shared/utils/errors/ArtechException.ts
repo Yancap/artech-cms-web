@@ -1,10 +1,10 @@
-import { TypeError } from '../../models/enums/type-error.enums';
+import { TypeModal } from '../../models/enums/type-modal.enums';
 
 export class ArtechException implements Error {
   message: string = '';
   details: string = '';
   scope: 'top' | 'component' = 'top'; //top ou component
-  type = TypeError.ERROR;
+  type = TypeModal.ERROR;
   status = 500;
 
   name: string = 'ArtechException';
@@ -14,7 +14,7 @@ export class ArtechException implements Error {
   constructor(errorObj: {
     message: string;
     details: string;
-    type: TypeError;
+    type: TypeModal;
     status: number;
     scope: 'top' | 'component';
   }) {

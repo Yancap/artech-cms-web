@@ -1,0 +1,68 @@
+<header class="container">
+  <div>
+    <div class="nav-container">
+      <img src="/logo.svg" alt="" />
+      <nav>
+        <div class="nav-item">
+          <a routerLink="/">Artigos</a>
+        </div>
+        <div class="nav-item">
+          <a routerLink="/article/create"> Criar </a>
+        </div>
+        <div class="nav-item active">
+          <a routerLink="/admin/add-author">Adicionar autor</a>
+        </div>
+      </nav>
+    </div>
+    <div class="profile-container">
+      <app-profile />
+    </div>
+  </div>
+</header>
+<ng-template #containerModals> </ng-template>
+<main class="container">
+  <div class="container-add-author">
+    <h1>Adicionar um novo Autor</h1>
+    <form>
+      <div>
+        <app-input-text
+          label="Nome"
+          placeholder="Fulano de Tal"
+          [style]="'alternative'"
+          [size]="'md'"
+          (onChange)="getValue($event, 'name')"
+          [value]="createAuthorForm.name"
+        />
+        <app-input-text
+          label="Email"
+          placeholder="seu@email.com"
+          [style]="'alternative'"
+          [size]="'md'"
+          (onChange)="getValue($event, 'email')"
+          [value]="createAuthorForm.email"
+        />
+      </div>
+      <div>
+        <app-input-text
+          label="Senha"
+          placeholder="Senha"
+          type="password"
+          [style]="'alternative'"
+          [size]="'md'"
+          (onChange)="getValue($event, 'password')"
+          [value]="createAuthorForm.password"
+        />
+        <app-input-text
+          label="Confirmar Senha"
+          placeholder="Senha"
+          type="password"
+          [style]="'alternative'"
+          [size]="'md'"
+          (onChange)="setConfirmPassword($event)"
+          [value]="confirmPassword"
+        />
+      </div>
+      <app-button [disabled]="isDisabled" (click)="addAuthor($event)">Adicionar</app-button>
+    </form>
+  </div>
+</main>

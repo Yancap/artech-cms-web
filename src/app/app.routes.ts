@@ -10,6 +10,8 @@ import { AdminAuthorsComponent } from './pages/home/routes/admin-authors/admin-a
 import { AdminArticlesComponent } from './pages/home/routes/admin-articles/admin-articles.component';
 import { adminGuard } from './shared/guards/admin/admin.guard';
 import { HandleArticleComponent } from './pages/handle-article/handle-article.component';
+import { ArticleCommentsComponent } from './pages/article-comments/article-comments.component';
+import { AddAuthorComponent } from './pages/add-author/add-author.component';
 
 export const routes: Routes = [
   {
@@ -62,12 +64,23 @@ export const routes: Routes = [
   },
   {
     component: HandleArticleComponent,
-    path: 'article/:slug',
-    canActivate: [authGuard]
+    path: 'article/:slug/edit',
+    canActivate: [authGuard],
   },
   {
     component: HandleArticleComponent,
-    path: 'article',
-    canActivate: [authGuard]
+    path: 'article/create',
+    canActivate: [authGuard],
+  },
+  {
+    component: ArticleCommentsComponent,
+    path: 'article/:slug/comments',
+    canActivate: [authGuard],
+  },
+  {
+    component: AddAuthorComponent,
+    path: 'admin/add-author',
+    canActivate: [authGuard],
+    canMatch: [adminGuard],
   },
 ];

@@ -1,0 +1,11 @@
+<div>
+  <header>
+    <span>{{ comment.userName }} - {{ comment.createdAt | date: 'longDate' : 'pt-BR'}}</span>
+    <app-svg name="trash" (click)="handleClick()" />
+  </header>
+  <article>
+    <p>
+      {{ comment.text }}
+    </p>
+  </article>
+</div>

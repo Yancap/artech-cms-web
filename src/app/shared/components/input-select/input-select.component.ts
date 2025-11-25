@@ -3,11 +3,13 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { SvgComponent } from '../svg/svg.component';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-input-select',
@@ -24,13 +26,13 @@ import { SvgComponent } from '../svg/svg.component';
               type="text"
               placeholder="Nova categoria..."
               (ngModelChange)="getValue($event)"
-              [ngModel]="valueInput"
+              [ngModel]="value"
               id="inputRef"
             />
 
             } @else {
             <div class="input-disabled" (click)="toggleOptions($event)">
-              {{ valueInput }}
+              {{ value }}
             </div>
             }
             <app-svg name="arrow-right" (click)="toggleOptions($event)" />
@@ -55,7 +57,7 @@ export class InputSelectComponent {
   @Input() public size: 'sm' | 'md' | 'lg' = 'md';
   @Input() public options: string[] = [];
 
-  @Output() value: EventEmitter<string> = new EventEmitter();
+  @Output() onChange: EventEmitter<string> = new EventEmitter();
 
   @ViewChild('optionsRef')
   optionsRef!: ElementRef<HTMLUListElement>;
@@ -63,7 +65,7 @@ export class InputSelectComponent {
   @ViewChild('containerRef')
   containerRef!: ElementRef<HTMLDivElement>;
 
-  valueInput: string = '';
+  @Input() value: string = '';
   toggleAddCategory: boolean = false;
 
   public toggleOptions(event: Event) {
@@ -95,7 +97,7 @@ export class InputSelectComponent {
       this.containerRef.nativeElement.classList.remove('opened');
     }
 
-    this.valueInput = value;
-    this.value.emit(value);
+    this.value = value;
+    this.onChange.emit(value);
   }
 }

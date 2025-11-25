@@ -2,7 +2,7 @@ div.container-content {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  width: 30rem;
+  max-width: 30rem;
 }
 
 div.container-select {
@@ -111,7 +111,7 @@ div.normal {
 
     input,
     div.input-disabled {
-      min-height: 42.8px;
+      min-height: 2.675rem;
     }
 
     input::placeholder {
@@ -152,7 +152,7 @@ div.alternative {
   }
   input,
   div.input-disabled {
-    min-height: 42.8px;
+    min-height: 2.675rem;
     font-family: "Ubuntu", sans-serif;
     text-transform: capitalize;
   }

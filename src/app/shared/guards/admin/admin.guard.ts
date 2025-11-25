@@ -3,7 +3,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { inject } from '@angular/core';
 import { map, take } from 'rxjs';
 import { ArtechException } from '../../utils/errors/ArtechException';
-import { TypeError } from '../../models/enums/type-error.enums';
+import { TypeModal } from '../../models/enums/type-modal.enums';
 import { TokenService } from '../../services/token/token.service';
 
 export const adminGuard: CanMatchFn = (route, state) => {
@@ -25,7 +25,7 @@ export const adminGuard: CanMatchFn = (route, state) => {
           details: 'Você não tem acesso a essa funcionalidade.',
           scope: 'top',
           status: 401,
-          type: TypeError.WARNING,
+          type: TypeModal.WARNING,
         });
       })
     );

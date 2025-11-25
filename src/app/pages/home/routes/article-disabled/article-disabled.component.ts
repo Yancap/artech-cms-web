@@ -10,33 +10,7 @@ import { ArticleService } from '../../../../shared/services/article/article.serv
 import { ArticleState } from '../../../../shared/models/enums/article-state.enums';
 import { map, take, tap } from 'rxjs';
 import { DatePipe } from '@angular/common';
-const mockDadosTabela = [
-  {
-    title: 'Titulo do artigo sobre o Front-End e suas tecnologias',
-    category: 'Front-end',
-    createdAt: 'Jan 01, 2023',
-  },
-  {
-    title: 'Titulo do artigo sobre o Front-End e suas tecnologias',
-    category: 'Front-end',
-    createdAt: 'Jan 02, 2023',
-  },
-  {
-    title: 'Titulo do artigo sobre o Front-End e suas tecnologias',
-    category: 'Front-end',
-    createdAt: 'Jan 03, 2023',
-  },
-  {
-    title: 'Titulo do artigo sobre o Front-End e suas tecnologias',
-    category: 'Front-end',
-    createdAt: 'Jan 04, 2023',
-  },
-  {
-    title: 'Titulo do artigo sobre o Front-End e suas tecnologias',
-    category: 'Front-end',
-    createdAt: 'Jan 05, 2023',
-  },
-];
+
 @Component({
   selector: 'app-article-disabled',
   standalone: true,

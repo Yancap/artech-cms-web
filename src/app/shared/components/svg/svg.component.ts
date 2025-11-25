@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { SafeHtmlPipe } from '../../pipes/safe-html/safe-html.pipe';
 
 @Component({
@@ -9,13 +9,15 @@ import { SafeHtmlPipe } from '../../pipes/safe-html/safe-html.pipe';
   template: `<i class="svg-icon" [innerHTML]="svgContent | safeHtml"></i>`,
   styleUrl: './svg.component.scss',
 })
-export class SvgComponent {
+export class SvgComponent implements OnChanges {
   @Input() name!: string;
   svgContent: string = '';
 
   constructor(private http: HttpClient) {}
 
-  ngOnInit() {
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+    
     this.getIcon(this.name).subscribe((svg) => (this.svgContent = svg));
   }
 

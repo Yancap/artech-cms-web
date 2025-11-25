@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ModalErrorComponent } from './modal-error.component';
+import { AddAuthorComponent } from './add-author.component';
 
-describe('ModalErrorComponent', () => {
-  let component: ModalErrorComponent;
-  let fixture: ComponentFixture<ModalErrorComponent>;
+describe('AddAuthorComponent', () => {
+  let component: AddAuthorComponent;
+  let fixture: ComponentFixture<AddAuthorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ModalErrorComponent]
+      imports: [AddAuthorComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ModalErrorComponent);
+    fixture = TestBed.createComponent(AddAuthorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

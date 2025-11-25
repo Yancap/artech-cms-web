@@ -1,0 +1,145 @@
+.bg-component {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.595);
+}
+
+.container-component {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 3rem;
+
+  width: 23.75rem;
+  height: 31.25rem;
+
+  background: var(--dark-purple-900);
+  border: 1px solid var(--purple-700);
+  border-radius: 0.5rem;
+
+  padding: 2rem 4rem;
+}
+
+
+.container-button {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.container-choice, .container-password {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  .container-button {
+    justify-content: space-between;
+  }
+
+  h2 {
+    color: var(--dark-purple-100);
+  }
+}
+
+.container-password {
+  gap: 3rem;
+}
+
+
+.container-input {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.p-error {
+  color: var(--red-300);
+}
+
+
+.profile-avatar {
+  display: flex;
+  justify-content: center;
+
+  .border-external {
+    border-radius: 1000px;
+    border: 2px solid var(--dark-purple-600);
+    height: 3rem;
+    width: 3rem;
+    overflow: hidden;
+  }
+
+  .border-internal {
+    border-radius: 1000px;
+    width: 100%;
+    height: 100%;
+    border-radius: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      width: -webkit-fill-available;
+    }
+  }
+}
+
+.container-image {
+  background: var(--dark-purple-800);
+  border-radius: 0.5rem;
+
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  cursor: pointer;
+
+  > div {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    cursor: pointer;
+
+    background: var(--dark-purple-600);
+  }
+  img {
+    width: -webkit-fill-available;
+    height: auto;
+  }
+  label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    cursor: pointer;
+  }
+
+  input[type="file"] {
+    display: none;
+  }
+}
+
+.circle {
+  cursor: pointer;
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  z-index: 1;
+  height: 100%;
+  width: 100%;
+  background: radial-gradient(
+    circle closest-side,
+    rgba(153, 153, 153, 0) 0%,
+    rgba(153, 153, 153, 0) 95%,
+    rgba(140, 69, 239, 0.806) 95%,
+    rgba(140, 69, 239, 0.806) 100%,
+    rgba(140, 69, 239, 0.806) 100%
+  );
+}

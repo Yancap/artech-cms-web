@@ -1,21 +1,29 @@
 import {
+  AfterViewChecked,
+  AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
+  Input,
+  OnChanges,
   OnInit,
   Output,
+  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { ButtonComponent } from '../button/button.component';
+import { Subject } from 'rxjs';
+import { SvgComponent } from "../svg/svg.component";
 
 @Component({
   selector: 'app-textarea-editor',
   standalone: true,
-  imports: [ButtonComponent],
+  imports: [ButtonComponent, SvgComponent],
   templateUrl: './textarea-editor.component.html',
   styleUrl: './textarea-editor.component.scss',
 })
-export class TextareaEditorComponent implements OnInit {
+export class TextareaEditorComponent implements OnInit, OnChanges {
   @ViewChild('editorRef') editorRef!: ElementRef<HTMLDivElement>;
 
   @ViewChild('inputLinkHrefRef')
@@ -27,7 +35,8 @@ export class TextareaEditorComponent implements OnInit {
   @ViewChild('linkFormatterRef')
   linkFormatterRef!: ElementRef<HTMLDivElement>;
 
-  @Output() value: EventEmitter<string> = new EventEmitter();
+  @Output() onChange: EventEmitter<string> = new EventEmitter();
+  @Input() value: string = '';
 
   public textLinkSelected: string | null = '';
   public hrefLinkSelected = '';
@@ -53,6 +62,7 @@ export class TextareaEditorComponent implements OnInit {
   timeoutHandleKeyDown!: NodeJS.Timeout;
 
   ngOnInit(): void {
+    console.log(this.value);
     window.addEventListener('click', (event) => {
       if (
         event.target &&
@@ -79,6 +89,12 @@ export class TextareaEditorComponent implements OnInit {
         document.execCommand('indent');
       }
     });
+  }
+
+  ngOnChanges(): void {
+    if (this.editorRef && this.editorRef.nativeElement) {
+      this.editorRef.nativeElement.innerHTML = this.value;
+    }
   }
 
   handleInputLinkDisabled = (event: Event) => event.preventDefault();
@@ -300,52 +316,6 @@ export class TextareaEditorComponent implements OnInit {
     if (child === this.editorRef.nativeElement) return null;
     if (child.nodeName === comparer) return child as Element;
     return this.getElementThatParent(child.parentElement, comparer);
-  }
-
-  private anyChildNodesAreAnyTagElement(child: Element, comparer: string) {
-    //if (!children[0]) return currentElement;
-
-    if (child.children.length > 0) {
-      const maxI = child.children.length;
-      const boolArray: boolean[] = [];
-      for (let index = 0; index < maxI; index++) {
-        const result = this.anyChildNodesAreAnyTagElement(
-          child.children[index],
-          comparer
-        );
-        boolArray.push(result);
-      }
-      return (
-        child.tagName === comparer || boolArray.some((boolValue) => boolValue)
-      );
-    }
-    return child.tagName === comparer;
-    //var element = this.iterateChildNode(children, index);
-  }
-
-  private verifyTextContentInChildren(child: Element, comparer: string) {
-    if (!child) return '';
-    if (!child.textContent || child.textContent?.length === 0) {
-      child.remove();
-      return '';
-    }
-
-    if (child.tagName === comparer) return child.textContent as string;
-
-    if (child.children.length > 0) {
-      const maxI = child.children.length;
-      const stringArray: string[] = [];
-      for (let index = 0; index < maxI; index++) {
-        const result = this.verifyTextContentInChildren(
-          child.children[index],
-          comparer
-        );
-        stringArray.push(result);
-      }
-      return stringArray.join('');
-    }
-    return '';
-    //var element = this.iterateChildNode(children, index);
   }
 
   applyFormat(event: Event, format: keyof typeof this.formattingStates) {
@@ -601,7 +571,7 @@ export class TextareaEditorComponent implements OnInit {
 
   onInput() {
     const content = this.editorRef.nativeElement.innerHTML;
-    this.value.emit(content);
+    this.onChange.emit(content);
   }
 
   //Método que verifica se algum elemento pai é a respectiva tag
@@ -629,6 +599,8 @@ export class TextareaEditorComponent implements OnInit {
           this.formattingStates.underline = false;
           this.formattingStates.ul = false;
           this.formattingStates.ol = false;
+          this.headingStates.toggleHeading = false;
+          this.headingStates.heading = null;
           return;
         }
 
@@ -653,6 +625,36 @@ export class TextareaEditorComponent implements OnInit {
           event.target.parentElement,
           'OL'
         );
+
+        if (this.iterateParentElement(event.target.parentElement, 'H1')) {
+          this.headingStates.toggleHeading = true;
+          this.headingStates.heading = 'h1';
+        } else if (
+          this.iterateParentElement(event.target.parentElement, 'H2')
+        ) {
+          this.headingStates.toggleHeading = true;
+          this.headingStates.heading = 'h2';
+        } else if (
+          this.iterateParentElement(event.target.parentElement, 'H3')
+        ) {
+          this.headingStates.toggleHeading = true;
+          this.headingStates.heading = 'h3';
+        } else if (
+          this.iterateParentElement(event.target.parentElement, 'H4')
+        ) {
+          this.headingStates.toggleHeading = true;
+          this.headingStates.heading = 'h4';
+        } else if (
+          this.iterateParentElement(event.target.parentElement, 'H5')
+        ) {
+          this.headingStates.toggleHeading = true;
+          this.headingStates.heading = 'h5';
+        } else if (
+          this.iterateParentElement(event.target.parentElement, 'H6')
+        ) {
+          this.headingStates.toggleHeading = true;
+          this.headingStates.heading = 'h6';
+        }
       }
       return;
     }
@@ -663,6 +665,8 @@ export class TextareaEditorComponent implements OnInit {
       this.formattingStates.underline = false;
       this.formattingStates.ul = false;
       this.formattingStates.ol = false;
+      this.headingStates.toggleHeading = false;
+      this.headingStates.heading = null;
 
       return;
     }
@@ -688,6 +692,35 @@ export class TextareaEditorComponent implements OnInit {
       selection.focusNode.parentElement,
       'OL'
     );
+    if (this.iterateParentElement(selection.focusNode.parentElement, 'H1')) {
+      this.headingStates.toggleHeading = true;
+      this.headingStates.heading = 'h1';
+    } else if (
+      this.iterateParentElement(selection.focusNode.parentElement, 'H2')
+    ) {
+      this.headingStates.toggleHeading = true;
+      this.headingStates.heading = 'h2';
+    } else if (
+      this.iterateParentElement(selection.focusNode.parentElement, 'H3')
+    ) {
+      this.headingStates.toggleHeading = true;
+      this.headingStates.heading = 'h3';
+    } else if (
+      this.iterateParentElement(selection.focusNode.parentElement, 'H4')
+    ) {
+      this.headingStates.toggleHeading = true;
+      this.headingStates.heading = 'h4';
+    } else if (
+      this.iterateParentElement(selection.focusNode.parentElement, 'H5')
+    ) {
+      this.headingStates.toggleHeading = true;
+      this.headingStates.heading = 'h5';
+    } else if (
+      this.iterateParentElement(selection.focusNode.parentElement, 'H6')
+    ) {
+      this.headingStates.toggleHeading = true;
+      this.headingStates.heading = 'h6';
+    }
   }
 
   handleKeyUp(event: KeyboardEvent) {
@@ -724,12 +757,44 @@ export class TextareaEditorComponent implements OnInit {
             selection.focusNode as Element,
             'OL'
           );
+
+          if (this.iterateParentElement(selection.focusNode as Element, 'H1')) {
+            this.headingStates.toggleHeading = true;
+            this.headingStates.heading = 'h1';
+          } else if (
+            this.iterateParentElement(selection.focusNode as Element, 'H2')
+          ) {
+            this.headingStates.toggleHeading = true;
+            this.headingStates.heading = 'h2';
+          } else if (
+            this.iterateParentElement(selection.focusNode as Element, 'H3')
+          ) {
+            this.headingStates.toggleHeading = true;
+            this.headingStates.heading = 'h3';
+          } else if (
+            this.iterateParentElement(selection.focusNode as Element, 'H4')
+          ) {
+            this.headingStates.toggleHeading = true;
+            this.headingStates.heading = 'h4';
+          } else if (
+            this.iterateParentElement(selection.focusNode as Element, 'H5')
+          ) {
+            this.headingStates.toggleHeading = true;
+            this.headingStates.heading = 'h5';
+          } else if (
+            this.iterateParentElement(selection.focusNode as Element, 'H6')
+          ) {
+            this.headingStates.toggleHeading = true;
+            this.headingStates.heading = 'h6';
+          }
         } else {
           this.formattingStates.bold = false;
           this.formattingStates.italic = false;
           this.formattingStates.underline = false;
           this.formattingStates.ul = false;
           this.formattingStates.ol = false;
+          this.headingStates.toggleHeading = false;
+          this.headingStates.heading = null;
         }
 
         break;

@@ -1,0 +1,103 @@
+<div class="bg-component">
+  <div class="container-component">
+    @if (changeType === null) {
+    <div class="container-choice">
+      <h2>Escolha o que você deseja mudar:</h2>
+      <div class="container-button">
+        <app-button
+          [style]="'secondary'"
+          [size]="'sm'"
+          (click)="setChangeType('password')"
+        >
+          Senha
+        </app-button>
+        <app-button
+          [style]="'primary'"
+          [size]="'sm'"
+          (click)="setChangeType('avatar')"
+        >
+          Avatar
+        </app-button>
+      </div>
+      <app-button [style]="'tertiary'" [size]="'sm'" (click)="onClose()">
+        Cancelar
+      </app-button>
+    </div>
+    } @if (changeType === 'avatar') {
+    <div class="profile-avatar">
+      <div class="border-external">
+        @if (imageBlob) {
+        <div class="border-internal">
+          <img [src]="imageBlob" alt="" />
+        </div>
+        } @else {
+        <div class="border-internal">
+          <app-svg name="person" />
+        </div>
+        }
+      </div>
+    </div>
+    <div class="container-image">
+      <div>
+        <label for="changeAvatarInput">
+          @if (imageBlob) {
+          <img [src]="imageBlob" alt="" />
+          <div class="circle"></div>
+          } @else {
+          <app-svg name="add" />
+          }
+        </label>
+        <input type="file" id="changeAvatarInput" (change)="getimageBlob($event)" />
+      </div>
+    </div>
+    <div class="container-button">
+      <app-button [style]="'tertiary'" [size]="'sm'" (click)="onClose()">
+        Cancelar
+      </app-button>
+      <app-button
+        [style]="'primary'"
+        [size]="'sm'"
+        (click)="changeAvatar($event)"
+        >Enviar</app-button
+      >
+    </div>
+    } @if (changeType === 'password') {
+    <div class="container-password">
+      <h2>Troca de senha</h2>
+      <div class="container-input">
+        <app-input-text
+          label="Nova senha"
+          size="sm"
+          type="password"
+          (onChange)="getPassword($event)"
+          [error]="errorConfirmPassword"
+        />
+        <app-input-text
+          label="Confirmar nova senha"
+          size="sm"
+          type="password"
+          (onChange)="getConfirmPassword($event)"
+          [error]="errorConfirmPassword"
+        />
+        <p class="p-error">
+          @if (errorConfirmPassword) {
+            As senhas devem ser iguais.
+          }
+        </p>
+      </div>
+      <div class="container-button">
+        <app-button [style]="'tertiary'" [size]="'sm'" (click)="onClose()">
+          Cancelar
+        </app-button>
+        <app-button
+          [style]="'primary'"
+          [size]="'sm'"
+          (click)="changePassword($event)"
+        >
+          Enviar
+        </app-button>
+      </div>
+    </div>
+    }
+  </div>
+</div>

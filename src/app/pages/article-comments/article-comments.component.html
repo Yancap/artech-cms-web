@@ -1,1 +1,52 @@
-<p>article-comments works!</p>
+<header class="container">
+  <div>
+    <div class="nav-container">
+      <img src="/logo.svg" alt="" />
+      <nav>
+        <div class="nav-item active">
+          <a routerLink="/">Artigos</a>
+        </div>
+        <div class="nav-item">
+          <a routerLink="/article/create"> Criar </a>
+        </div>
+        @if (userData && userData.role === "Admin") {
+          <div class="nav-item">
+            <a routerLink="/admin/add-author">Adicionar autor</a>
+          </div>
+        }
+      </nav>
+    </div>
+    <div class="profile-container">
+      <app-profile />
+    </div>
+  </div>
+</header>
+<main class="container">
+  <div class="container-comments">
+    <header>
+      <app-button
+        [size]="'xs'"
+        [style]="'primary'"
+        icon="arrow-left"
+        (click)="returnHome($event)"
+      >
+        voltar
+      </app-button>
+    </header>
+    <div>
+      @if (article) {
+      <h1>{{ article.articleTitle }}</h1>
+      <h3>Comentários</h3>
+      <div class="comments">
+        @for (comment of article.commentsList; track $index) {
+        <app-container-comment
+          [comment]="comment"
+          (action)="deleteComment(comment.id)"
+        />
+        <span class="line"></span>
+        }
+      </div>
+      }
+    </div>
+  </div>
+</main>

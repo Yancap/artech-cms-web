@@ -1,14 +1,23 @@
 <header class="container">
   <div>
+    <div class="menu">
+      <app-svg name="menu" (click)="toggleMenu(true)" />
+    </div>
     <div class="nav-container">
       <img src="/logo.svg" alt="" />
       <nav>
         <div class="nav-item active">
-          <a href="" routerLink="/">Artigos</a>
+          <a routerLink="/">Artigos</a>
         </div>
         <div class="nav-item">
-          <a href="" routerLink="/article/">Criar</a>
+          <a routerLink="/article/create">Criar</a>
         </div>
+
+        @if (userData && userData.role === "Admin") {
+        <div class="nav-item">
+          <a routerLink="/admin/add-author">Adicionar autor</a>
+        </div>
+        }
       </nav>
     </div>
     <div class="profile-container">
@@ -17,7 +26,14 @@
   </div>
 </header>
 <main class="container">
-  <aside>
+  <div class="bg-aside" [class.open]="menuIsOpen"></div>
+  <aside [class.open]="menuIsOpen">
+    <div class="return-menu">
+      <app-svg name="arrow-left" (click)="toggleMenu(false)" />
+    </div>
+    <div class="profile">
+      <app-profile [logout]="false" [keepAvatar]="true"/>
+    </div>
     <section>
       <h5>Configurações</h5>
       <ul class="aside-container-nav">
@@ -27,6 +43,7 @@
             class=""
             routerLinkActive="active"
             routerLink="/articles/active"
+            (click)="toggleMenu(false)"
           >
             <div class="icon-nav">
               <app-svg name="web" />
@@ -35,7 +52,12 @@
           </a>
         </li>
         <li>
-          <a href="" routerLinkActive="active" routerLink="/articles/draft">
+          <a
+            href=""
+            routerLinkActive="active"
+            routerLink="/articles/draft"
+            (click)="toggleMenu(false)"
+          >
             <div class="icon-nav">
               <app-svg name="draw" />
             </div>
@@ -43,7 +65,12 @@
           </a>
         </li>
         <li>
-          <a href="" routerLinkActive="active" routerLink="/articles/disabled">
+          <a
+            href=""
+            routerLinkActive="active"
+            routerLink="/articles/disabled"
+            (click)="toggleMenu(false)"
+          >
             <div class="icon-nav">
               <app-svg name="inactive" />
             </div>
@@ -56,7 +83,12 @@
       <h5>Gerenciar</h5>
       <ul class="aside-container-nav">
         <li>
-          <a href="" routerLinkActive="active" routerLink="/manage/comment">
+          <a
+            href=""
+            routerLinkActive="active"
+            routerLink="/manage/comment"
+            (click)="toggleMenu(false)"
+          >
             <div class="icon-nav">
               <app-svg name="comments" />
             </div>
@@ -65,7 +97,12 @@
         </li>
         @if (userData && userData.role === "Admin") {
         <li>
-          <a href="" routerLinkActive="active" routerLink="/admin/articles">
+          <a
+            href=""
+            routerLinkActive="active"
+            routerLink="/admin/articles"
+            (click)="toggleMenu(false)"
+          >
             <div class="icon-nav">
               <app-svg name="article" />
             </div>
@@ -73,7 +110,12 @@
           </a>
         </li>
         <li>
-          <a href="" routerLinkActive="active" routerLink="/admin/authors">
+          <a
+            href=""
+            routerLinkActive="active"
+            routerLink="/admin/authors"
+            (click)="toggleMenu(false)"
+          >
             <div class="icon-nav">
               <app-svg name="authors" />
             </div>
@@ -85,10 +127,8 @@
     </section>
   </aside>
   <div>
-    <!-- <app-modal-error /> -->
-     <ng-template #containerModals>
-
-     </ng-template>
+    <!-- <app-modal-message /> -->
+    <ng-template #containerModals> </ng-template>
     <section class="container-section-page">
       <router-outlet />
     </section>

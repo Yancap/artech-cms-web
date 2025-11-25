@@ -10,12 +10,25 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class ArticleService {
+
+  private readonly ENDPOINT = '/article/';
+
   constructor(private http: HttpClient, private tokenService: TokenService) {}
 
   public getArticleByState(state: ArticleState) {
     const token = this.tokenService.getUserToken();
     return this.http.get<IArticleResponse>(
-      environment.apiUrl + `/article/${state}`,
+      environment.apiUrl + `${this.ENDPOINT}${state}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+  }
+
+  public getArticleBySlug(slug: string) {
+    const token = this.tokenService.getUserToken();
+    return this.http.get<ArticleDTO>(
+      environment.apiUrl + `${this.ENDPOINT}get/${slug}`,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -25,7 +38,7 @@ export class ArticleService {
   public changeArticleState(slug: string) {
     const token = this.tokenService.getUserToken();
     return this.http.patch<IArticleResponse>(
-      environment.apiUrl + `/article/`,
+      environment.apiUrl + this.ENDPOINT,
       {
         state: ArticleState.active,
         slug,
@@ -35,4 +48,28 @@ export class ArticleService {
       }
     );
   }
+
+  public createArticle(article: ArticleFormDTO) {
+    const token = this.tokenService.getUserToken();
+    return this.http.post<IArticleResponse>(
+      environment.apiUrl + this.ENDPOINT,
+      article,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+  }
+
+  public editArticle(article: ArticleFormDTO) {
+    const token = this.tokenService.getUserToken();
+    return this.http.put<IArticleResponse>(
+      environment.apiUrl + this.ENDPOINT,
+      article,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+  }
+
+
 }

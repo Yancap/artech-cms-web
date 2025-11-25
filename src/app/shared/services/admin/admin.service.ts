@@ -38,6 +38,15 @@ export class AdminService {
       .pipe(map(({ authorsList }) => authorsList));
   }
 
+  public createAuthor(request: ICreateAuthor) {
+    const token = this.tokenService.getUserToken();
+    return this.http.post<IAuthorResponse>(
+      environment.apiUrl + `/admin/manage/author`,
+      request,
+      { headers: { Authorization: `Bearer ${token}` } }
+    );
+  }
+
   public deleteAuthor(email: string) {
     const token = this.tokenService.getUserToken();
     return this.http.delete<IAuthorResponse>(

@@ -4,6 +4,26 @@ div {
   gap: 0.5rem;
 }
 
+.container-input {
+  position: relative;
+}
+
+.input-toggle {
+  cursor: pointer;
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 90%;
+  transform: translateY(-50%);
+}
+
+label {
+  -webkit-user-select: none; /* Safari e Chrome */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer 10+ */
+  user-select: none; /* Padrão moderno */
+}
+
 div.normal {
   label {
     font-size: 14px;
@@ -33,6 +53,15 @@ div.normal {
       padding: 0.75rem 0.875rem;
       font-size: 1rem;
     }
+
+    .input-toggle {
+      left: 90%;
+    }
+    @media (max-width: 340px) {
+      .input-toggle {
+        left: 85%;
+      }
+    }
   }
 
   &.input-sm {
@@ -43,6 +72,14 @@ div.normal {
     input {
       padding: 0.5rem 0.75rem;
       font-size: 0.875rem;
+    }
+    .input-toggle {
+      left: 88%;
+    }
+    @media (max-width: 340px) {
+      .input-toggle {
+        left: 83%;
+      }
     }
   }
 }
@@ -69,6 +106,21 @@ div.alternative {
     color: var(--dark-purple-100);
   }
 
+  &.input-lg {
+    label {
+      font-size: 1.25rem;
+    }
+
+    input {
+      padding: 1rem 1.15rem;
+      font-size: 1.15rem;
+    }
+
+    .input-toggle {
+      left: 90%;
+    }
+  }
+
   &.input-md {
     label {
       font-size: 1rem;
@@ -77,6 +129,10 @@ div.alternative {
     input {
       padding: 0.75rem 0.875rem;
       font-size: 1rem;
+    }
+
+    .input-toggle {
+      left: 90%;
     }
   }
 
@@ -88,6 +144,10 @@ div.alternative {
     input {
       padding: 0.5rem 0.75rem;
       font-size: 0.875rem;
+    }
+
+    .input-toggle {
+      left: 88%;
     }
   }
 }
@@ -113,6 +173,37 @@ div.type-file {
       font-style: "Poppins", sans-serif;
       font-weight: 800;
       color: var(--dark-purple-400);
+    }
+  }
+}
+
+div.error {
+  input {
+    border: 0.25px solid var(--red-500);
+  }
+}
+
+:host {
+  ::ng-deep {
+    .container-input {
+      .input-lg {
+        svg {
+          width: 1.625rem;
+          width: 1.125rem;
+        }
+      }
+
+      app-svg {
+        &:hover {
+          svg path {
+            fill: var(--purple-700);
+          }
+        }
+      }
+      svg path {
+        fill: var(--purple-300);
+        transition: 0.25s;
+      }
     }
   }
 }

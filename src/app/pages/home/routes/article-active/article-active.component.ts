@@ -31,7 +31,7 @@ export class ArticleActiveComponent implements OnInit, AfterContentInit {
   ) {}
 
   editArticle(slug: string) {
-    this.router.navigateByUrl(`/article/${slug}`)
+    this.router.navigateByUrl(`/article/${slug}/edit`);
   }
 
   createArticle() {

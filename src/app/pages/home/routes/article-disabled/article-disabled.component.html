@@ -2,35 +2,37 @@
   <header>
     <h1>Desativados</h1>
   </header>
-  <table class="table-artech">
-    <thead>
-      <tr>
-        <th>Título</th>
-        <th>Categoria</th>
-        <th>Data de publicação</th>
-        <th class="action"></th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (data of dataSource; track $index) {
+  <div class="container-table">
+    <table class="table-artech">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Categoria</th>
+          <th>Data de publicação</th>
+          <th class="action"></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (data of dataSource; track $index) {
 
-      <tr>
-        <td>{{ data.title }}</td>
-        <td>{{ data["category"] }}</td>
-        <td>{{ data.createdAt | date : "MMM d, y" }}</td>
-        <td class="action">
-          <app-button
-            [size]="'xs'"
-            [style]="'active'"
-            (click)="setStateToActive(data.slug)"
-          >
-            Publicar
-          </app-button>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
+        <tr>
+          <td>{{ data.title }}</td>
+          <td>{{ data["category"] }}</td>
+          <td>{{ data.createdAt | date : "MMM d, y" }}</td>
+          <td class="action">
+            <app-button
+              [size]="'xs'"
+              [style]="'active'"
+              (click)="setStateToActive(data.slug)"
+            >
+              Publicar
+            </app-button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
   @if (dataSource) {
   <app-paginator
     [tablePageData]="dataServer"

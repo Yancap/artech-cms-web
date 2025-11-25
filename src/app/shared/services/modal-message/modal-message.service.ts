@@ -1,11 +1,4 @@
-import {
-  ComponentRef,
-  inject,
-  Injectable,
-  ViewContainerRef,
-} from '@angular/core';
-import { ModalErrorComponent } from '../../components/modal-error/modal-error.component';
-import { TypeError } from '../../models/enums/type-error.enums';
+import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { IModalMessageData } from '../../models/interfaces/IModalMessageData';
 

@@ -3,11 +3,13 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { SvgComponent } from '../svg/svg.component';
 import { FormsModule } from '@angular/forms';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-input-add',
@@ -18,7 +20,7 @@ import { FormsModule } from '@angular/forms';
       <div class="container-content">
         <label [for]="label"> {{ label }}</label>
         <div class="container-input">
-          <app-svg name="hashtag"  class="hashtag"/>
+          <app-svg name="hashtag" class="hashtag" />
           <input
             type="text"
             placeholder="tag"
@@ -30,7 +32,7 @@ import { FormsModule } from '@angular/forms';
         </div>
       </div>
       <div class="container-tag">
-        @for (value of valueInput; track $index) {
+        @for (value of value; track $index) {
 
         <span class="tag">
           #{{ value }}
@@ -47,24 +49,24 @@ export class InputAddComponent {
   @Input() public style: 'normal' | 'alternative' = 'normal';
   @Input() public size: 'sm' | 'md' | 'lg' = 'md';
 
-  @Output() value: EventEmitter<string[]> = new EventEmitter();
+  @Output() onChange: EventEmitter<string[]> = new EventEmitter();
 
   @ViewChild('containerRef')
   containerRef!: ElementRef<HTMLDivElement>;
 
-  valueInput: string[] = [];
+  @Input() value: string[] = [];
   saveValue: string = '';
 
   public addNewValue() {
     if (this.saveValue.length > 0) {
-      this.valueInput.push(this.saveValue.replace(/[^a-zA-Z0-9]/g, ""));
-      this.value.emit(this.valueInput);
+      this.value.push(this.saveValue.replace(/[^a-zA-Z0-9]/g, ''));
+      this.onChange.emit(this.value);
       this.saveValue = '';
     }
   }
   public removeValue(value: string) {
-    this.valueInput = this.valueInput.filter((valueArr) => valueArr !== value);
-    this.value.emit(this.valueInput);
+    this.value = this.value.filter((valueArr) => valueArr !== value);
+    this.onChange.emit(this.value);
   }
 
   public getValue(value: string) {

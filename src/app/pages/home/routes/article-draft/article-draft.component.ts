@@ -55,7 +55,7 @@ export class ArticleDraftComponent implements OnInit, AfterContentInit {
   ) {}
 
   editArticle(slug: string) {
-    this.router.navigateByUrl(`/article/${slug}`);
+    this.router.navigateByUrl(`/article/${slug}/edit`);
   }
   createArticle() {
     this.router.navigateByUrl(`/article/`);

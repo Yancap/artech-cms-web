@@ -19,25 +19,26 @@
 
   --purple-700: #4643f0;
   --purple-500: #5653f4;
+  --purple-400: #7b79d9;
   --purple-300: #9d9bf2;
 
-  --red-700: #9D1007;
+  --red-700: #9d1007;
   --red-500: #c9352d;
-  --red-300: #F5746C;
+  --red-300: #f5746c;
 
   --yellow-700: #925f00;
   --yellow-500: #bc8401;
   --yellow-300: #d8c25e;
 
-  --blue-700: #0058AC;
-  --blue-500: #0D77DD;
+  --blue-700: #0058ac;
+  --blue-500: #0d77dd;
   --blue-300: #5caffd;
 
   --cornflower-blue-300: #8198db;
 
   --green-700: #1cb358;
   --green-500: #39df7b;
-  --green-300: #47F58C;
+  --green-300: #47f58c;
 }
 
 body {
@@ -50,7 +51,9 @@ input,
 a,
 span,
 li,
-h1 {
+h1,
+h2,
+h3 {
   font-family: "Ubuntu", sans-serif;
 }
 
@@ -66,6 +69,28 @@ button {
 //   list-style: none;
 // }
 
+.container-table {
+  width: 100%;
+  overflow-x: auto;
+  margin-bottom: 1rem;
+
+  &::-webkit-scrollbar-track {
+    height: 1px;
+    border-radius: 1000px;
+    background-color: var(--dark-purple-800);
+  }
+  &::-webkit-scrollbar {
+    height: 5px;
+    border-radius: 1000px;
+    background: var(--dark-purple-800);
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--purple-500);
+    border-radius: 1000px;
+    border: 1px solid var(--dark-purple-800);
+  }
+}
+
 .table-artech {
   width: 100%;
   table-layout: fixed;
@@ -80,7 +105,7 @@ button {
       width: 8rem;
     }
     th {
-      padding: 1rem 0;
+      padding: 1rem .5rem;
     }
   }
   tbody {
@@ -89,45 +114,68 @@ button {
     font-family: "Ubuntu", sans-serif;
     text-align: left;
     td {
-      padding: 2rem 2rem 2rem 0;
+      padding: 2rem 2rem 2rem .5rem;
     }
     td.action {
       padding: 2rem 0.5rem;
     }
   }
 
-  td, th {
+  td,
+  th {
     border-bottom: 3px solid var(--dark-purple-800);
+  }
+
+  @media (max-width: 560px) {
+    width: max-content;
   }
 }
 
 .container {
   width: 100%;
-  margin: 0 auto;
-  max-width: 660px;
+  max-width: calc(100vw - 1.5rem);
   padding: 0 0.75rem;
+  margin: 0;
   @media (min-width: 764px) {
+    margin: 0 auto;
     max-width: 660px;
     padding: 0;
   }
   @media (min-width: 880px) {
+    margin: 0 auto;
     max-width: 764px;
     padding: 0;
   }
   @media (min-width: 992px) {
+    margin: 0 auto;
     max-width: 880px;
     padding: 0;
   }
   @media (min-width: 1080px) {
+    margin: 0 auto;
     max-width: 992px;
     padding: 0;
   }
   @media (min-width: 1180px) {
+    margin: 0 auto;
     max-width: 1080px;
     padding: 0;
   }
   @media (min-width: 1280px) {
+    margin: 0 auto;
     max-width: 1180px;
     padding: 0;
+  }
+}
+
+@media (max-width: 1024px) {
+  html {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 360px) {
+  html {
+    font-size: 12px;
   }
 }

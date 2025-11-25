@@ -2,37 +2,44 @@
   <header>
     <h1>Comentários</h1>
   </header>
-  <table class="table-artech">
-    <thead>
-      <tr>
-        <th>Título</th>
-        <th>Categoria</th>
-        <th>Comentários</th>
-        <th class="action"></th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (data of dataSource; track $index) {
+  <div class="container-table">
+    <table class="table-artech">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Categoria</th>
+          <th>Comentários</th>
+          <th class="action"></th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (data of dataSource; track $index) {
 
-      <tr>
-        <td>{{ data.title }}</td>
-        <td>{{ data["category"] }}</td>
-        <td>
-          {{
-            data.commentsLength <= 1
-              ? data.commentsLength + " Comentário"
-              : data.commentsLength + " Comentários"
-          }}
-        </td>
-        <td class="action">
-          <app-button [size]="'xs'" icon="view" [style]="'secondary'">
-            Vizualizar
-          </app-button>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
+        <tr>
+          <td>{{ data.title }}</td>
+          <td>{{ data["category"] }}</td>
+          <td>
+            {{
+              data.commentsLength <= 1
+                ? data.commentsLength + " Comentário"
+                : data.commentsLength + " Comentários"
+            }}
+          </td>
+          <td class="action">
+            <app-button
+              [size]="'xs'"
+              icon="view"
+              [style]="'secondary'"
+              (click)="viewComment(data.articleSlug)"
+            >
+              Vizualizar
+            </app-button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
   <app-paginator
     [tablePageData]="dataServer"
     (paginate)="onChangePage($event)"

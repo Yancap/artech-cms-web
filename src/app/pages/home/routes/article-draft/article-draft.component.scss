@@ -7,6 +7,11 @@ header {
     color: white;
     font-weight: 300;
   }
+  @media (max-width: 500px) {
+    flex-direction: column;
+    gap: 2rem;
+    align-items: flex-start;
+  }
 }
 
 table {

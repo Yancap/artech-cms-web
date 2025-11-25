@@ -1,68 +1,81 @@
 header {
-  margin-bottom: 2rem;
-}
+  margin-bottom: 5rem;
 
-header > div {
-  display: flex;
-  justify-content: space-between;
-  height: 4rem;
-  img {
-    height: auto;
-    width: 200px;
-  }
-}
-
-.nav-container {
-  display: flex;
-  gap: 3rem;
-
-  @media (min-width: 992px) {
-    gap: 4rem;
-  }
-  @media (min-width: 1180px) {
-    gap: 6rem;
-  }
-
-  nav {
-    height: 100%;
+  > div {
     display: flex;
-    gap: 1.5rem;
-    align-items: center;
+    justify-content: space-between;
+    height: 4rem;
+    img {
+      height: auto;
+      width: 12rem;
+    }
   }
 
-  .nav-item {
-    height: 100%;
+  .nav-container {
     display: flex;
-    align-items: center;
+    gap: 3rem;
 
-    &.active {
-      border-bottom: 2px solid;
-      color: var(--purple-500);
-      a {
+    @media (min-width: 992px) {
+      gap: 4rem;
+    }
+    @media (min-width: 1180px) {
+      gap: 6rem;
+    }
+
+    nav {
+      height: 100%;
+      display: flex;
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .nav-item {
+      height: 100%;
+      display: flex;
+      align-items: center;
+
+      &.active {
+        border-bottom: 2px solid;
+        color: var(--purple-500);
+        a {
+          color: var(--dark-purple-100);
+        }
+      }
+    }
+
+    a {
+      color: var(--dark-purple-300);
+      font-weight: 400;
+      &:hover {
         color: var(--dark-purple-100);
       }
     }
   }
 
-  a {
-    color: var(--dark-purple-300);
-    font-weight: 400;
-    &:hover {
-      color: var(--dark-purple-100);
+  .profile-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  @media (max-width: 900px) {
+    margin-bottom: 2rem;
+    > div img {
+      display: none;
     }
   }
-}
-
-.profile-container {
-  height: 100%;
-  display: flex;
-  align-items: center;
 }
 
 main {
   display: flex;
   gap: 4rem;
   justify-content: space-between;
+  @media (max-width: 764px) {
+    background: var(--dark-purple-900);
+    width: 100vw;
+    max-width: 100vw;
+    padding: 0;
+  }
 }
 
 .form-article {
@@ -72,6 +85,9 @@ main {
   display: flex;
   flex-direction: column;
   gap: 2rem;
+  @media (max-width: 764px) {
+    padding: 2rem 0.75rem;
+  }
 }
 
 .head-buttons {

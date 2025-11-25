@@ -1,55 +1,127 @@
+.component {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
 .container-profile {
   display: flex;
-  gap: .5rem;
+  gap: 0.5rem;
   align-items: center;
+
+  &:hover {
+    .border-external {
+      border: 2.5px solid var(--purple-700);
+    }
+    .author-email {
+      color: var(--purple-700);
+    }
+  }
+
+  
+  @media (max-width: 500px) {
+    &.logout:not(.disabled)
+    .container-info, .border-external {
+      display: none;
+    }
+
+    &.keepAvatar .border-external {
+      display: initial;
+    }
+  }
+}
+
+.container-profile.disabled {
+  .container-info,
+  .border-external {
+    cursor: initial;
+  }
+
+  
 }
 
 .container-profile.left {
   .container-info {
     order: 2;
   }
-  .border-external{
+  .border-external {
     order: 1;
   }
+}
+
+.container-logout {
+  display: flex;
 }
 
 .container-info {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: .25rem;
+  gap: 0.25rem;
+  cursor: pointer;
   .author-name {
     font-size: 1rem;
     color: var(--dark-purple-300);
   }
   .author-email {
-    font-size: .75rem;
+    font-size: 0.75rem;
     color: var(--purple-300);
+    transition: 0.2s;
+  }
+
+  @media (max-width: 600px) {
+    .container-profile.logout .author-email {
+      display: none;
+    }
   }
 }
 
-.border-external{
+.border-external {
   border-radius: 1000px;
   border: 2px solid var(--dark-purple-600);
   height: 3rem;
   width: 3rem;
   overflow: hidden;
   cursor: pointer;
+  transition: 0.2s;
 }
 
-.border-external.active{
+.border-external.active {
   border: 2.5px solid var(--purple-300);
 }
 
-.border-internal{
+.border-internal {
   border-radius: 1000px;
 }
 
-.border-internal.without-image{
-  padding: .65rem;
+.border-internal.without-image {
+  padding: 0.65rem;
 }
 
 img {
   width: 100%;
   height: auto;
+}
+
+app-svg {
+  display: inline-block;
+  cursor: pointer;
+}
+
+:host {
+  ::ng-deep {
+    .component {
+      app-svg {
+        &:hover {
+          svg path {
+            fill: var(--purple-700);
+          }
+        }
+      }
+      svg path {
+        fill: var(--purple-300);
+        transition: 0.25s;
+      }
+    }
+  }
 }

@@ -6,7 +6,7 @@ import { SvgComponent } from '../svg/svg.component';
   standalone: true,
   imports: [SvgComponent],
   template: `
-    <button [class]="'btn-' + size + ' ' + style" >
+    <button [disabled]="disabled" [class]="'btn-' + size + ' ' + style" >
       @if (icon) {
         <app-svg [name]="icon" />
       }
@@ -26,6 +26,7 @@ export class ButtonComponent {
     | 'error'
     | 'warning' = 'primary';
   @Input() public icon!: string;
+  @Input() public disabled!: boolean;
 
   //@Output() click: EventEmitter<Event> = new EventEmitter();
 

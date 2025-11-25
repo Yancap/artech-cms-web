@@ -5,13 +5,13 @@
       <app-input-text
         label="Email"
         placeholder="seu@email.com"
-        (value)="email($event)"
+        (onChange)="email($event)"
       />
       <app-input-text
         label="Senha"
         placeholder="Senha"
         type="password"
-        (value)="password($event)"
+        (onChange)="password($event)"
       />
       <app-button (click)="login($event)">Entrar</app-button>
     </form>

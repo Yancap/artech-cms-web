@@ -61,7 +61,7 @@
         class="btn-link"
         [class.active]="formattingStates.link"
       >
-        🔗
+        <app-svg name="link" />
       </button>
       @if (toggleLinkFormatter) {
 
@@ -104,13 +104,13 @@
       [class.active]="formattingStates.ul && !formattingStates.ol"
       (click)="applyUnorderedList($event)"
     >
-      • Lista
+      <app-svg name="unordered-list" />
     </button>
     <button
       [class.active]="!formattingStates.ul && formattingStates.ol"
       (click)="applyOrderedList($event)"
     >
-      1. Lista
+      <app-svg name="ordered-list" />
     </button>
   </div>
 

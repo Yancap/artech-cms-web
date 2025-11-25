@@ -1,21 +1,36 @@
-<div class="container-profile {{ direction }}">
-  <div class="container-info">
-    @if (userData) {
-    <p class="author-name">{{ userData.name }}</p>
-    <span class="author-email">{{ userData.email }}</span>
-    }
-  </div>
-  <div class="border-external active">
-    @if (userData && userData.urlAvatar) {
-    <div class="border-internal">
-      <img [src]="userData.urlAvatar" alt="" srcset="" />
-    </div>
+<div class="component">
+  <div
+    class="container-profile {{ direction }} {{
+      disabledActions && 'disabled'
+    }}"
+    [class.logout]="logout"
+    [class.keepAvatar]="keepAvatar"
+  >
+    <div class="border-external active">
+      @if (userData && userData.urlAvatar) {
+      <div class="border-internal" (click)="openChangeAvatarModal()">
+        <img [src]="userData.urlAvatar" alt="" srcset="" />
+      </div>
 
-    } @else {
-    <div class="border-internal without-image">
-      <img src="/svg/person.svg" alt="" srcset="" />
-    </div>
+      } @else {
+      <div
+        class="border-internal without-image"
+        (click)="openChangeAvatarModal()"
+      >
+        <img src="/svg/person.svg" alt="" srcset="" />
+      </div>
 
-    }
+      }
+    </div>
+    <div class="container-info" (click)="openChangeAvatarModal()">
+      @if (userData) {
+      <p class="author-name">{{ userData.name }}</p>
+      <span class="author-email">{{ userData.email }}</span>
+      }
+    </div>
   </div>
+  @if (logout) {
+  <app-svg name="logout" (click)="handleLogout()" />
+  }
 </div>
+<ng-template #changeAvatar> </ng-template>

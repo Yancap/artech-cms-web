@@ -29,8 +29,44 @@
     [x] Dar a possibilidade de criar uma nova no Select
   [x] Fazer o input de tags
   [x] Fazer o input de credits
-[] Testar a criação de texto
-  [] Criar um input próprio para imagem, faze o tratamento e mostrar a imagem no editor
-[] Fazer a pagina de comments
-[] Fazer o filtro nas paginas do ADM
+[x] Testar a criação de texto
+  [x] Criar um input próprio para imagem 
+  [x] fazer o tratamento 
+  [x] mostrar a imagem no editor
+  [x] fazer a requisição para criar artigo ou rascunho
+  [x] fazer a chamada de modals de erro
+    [x] fazer o tratamento de erros de SQL e banco de dados
+  [x] fazer a chamada de modals de sucesso para quando o artigo for criado
+  [x] limpar os campos quando o artigo for criado
+[x] Fazer a ativação da rota criar artigo
+[x] Fazer a rota editar artigo e mudar o nome lá no menu
+  [x] Fazer cada campo do artigo se refletir nos inputs
+    [x] Tenta ajustar o DetectChanges nos componentes
+    [x] Ajustar a URL da imagem
+    [x] Ajustar as mensagens de Rascunho e Salvar
+[x] Fazer a pagina de comments
+  [x] Fazer o componente que tem os comentário
+  [x] Fazer o delete
+  [x] Fazer o reload pois exclusão
+[x] Fazer o criar autor
+  [x] Criar o form, 
+  [x] fazer as validações e mensagem de erro
+  [x] requisição
+[x] Fazer a trocar de avatar
+  [x] Fazer a requisição a API
+[x] Fazer o Logout
+[x] Fazer a troca de senha
+  [x] Trasformar o modal de troca de avatar na opção de trocar de senha tbm
+    [x] Mudar o nome do componente
+  [x] Validar a confirmação de senha
+  [x] Fazer a requisição a API
+
+
+[x] Fazer a responsividade
+  [x] Fazer das rotas do home
+  [x] Fazer do handle article
+  [x] Fazer do add author
+  [x] Fazer do article comment
+
+[] Fazer os testes unitários no futuro
 

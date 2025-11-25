@@ -3,12 +3,14 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
 import { SvgComponent } from '../svg/svg.component';
 import { FormsModule } from '@angular/forms';
 import { ButtonComponent } from '../button/button.component';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-input-link',
@@ -45,11 +47,16 @@ import { ButtonComponent } from '../button/button.component';
               />
             </div>
           </div>
-          <app-button icon="add" size="md" [style]="'primary'" (click)="addNewValue($event)" />
+          <app-button
+            icon="add"
+            size="md"
+            [style]="'primary'"
+            (click)="addNewValue($event)"
+          />
         </div>
       </div>
       <div class="container-link">
-        @for (value of valueInput; track $index) {
+        @for (value of value; track $index) {
         <span class="link">
           {{ value.name }}: <a>{{ value.link }}</a>
           <app-svg name="plus" (click)="removeValue(value)" />
@@ -65,30 +72,31 @@ export class InputLinkComponent {
   @Input() public style: 'normal' | 'alternative' = 'normal';
   @Input() public size: 'sm' | 'md' | 'lg' = 'md';
 
-  @Output() value: EventEmitter<{ name: string; link: string }[]> =
+  @Output() onChange: EventEmitter<{ name: string; link: string }[]> =
     new EventEmitter();
 
   @ViewChild('containerRef')
   containerRef!: ElementRef<HTMLDivElement>;
 
-  valueInput: { name: string; link: string }[] = [];
+  @Input() value: { name: string; link: string }[] = [];
   saveValueName: string = '';
   saveValueLink: string = '';
 
   public addNewValue(event: Event) {
     event.preventDefault();
-    this.valueInput.push({
+    this.value.push({
       name: this.saveValueName,
       link: this.saveValueLink,
     });
 
-    this.value.emit(this.valueInput);
+    this.onChange.emit(this.value);
     this.saveValueName = '';
     this.saveValueLink = '';
   }
+
   public removeValue(value: { name: string; link: string }) {
-    this.valueInput = this.valueInput.filter((valueArr) => valueArr !== value);
-    this.value.emit(this.valueInput);
+    this.value = this.value.filter((valueArr) => valueArr !== value);
+    this.onChange.emit(this.value);
   }
 
   public getValueName(value: string) {

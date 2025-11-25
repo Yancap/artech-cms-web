@@ -95,6 +95,12 @@ button {
         fill: var(--blue-700);
       }
     }
+
+    .modal-type-success {
+      svg path {
+        fill: var(--green-700);
+      }
+    }
   }
 }
 
@@ -128,5 +134,16 @@ button {
   }
   p {
     color: var(--blue-500);
+  }
+}
+
+.modal-type-success {
+  background: var(--green-300);
+  h6,
+  h5 {
+    color: var(--green-700);
+  }
+  p {
+    color: var(--green-500);
   }
 }
