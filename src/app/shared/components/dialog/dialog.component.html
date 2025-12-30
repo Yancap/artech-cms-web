@@ -1,0 +1,20 @@
+<div class="bg-dialog" (click)="closeDialog()">
+  <div class="dialog">
+    <header>
+      <h2>{{ title }}</h2>
+    </header>
+    <div class="dialog-body">
+      @for (paragraph of paragraphs; track $index) {
+      <p>{{ paragraph }}</p>
+      }
+    </div>
+    <footer>
+      <app-button [style]="'tertiary'" size="sm" (click)="secondaryAction()">
+        {{ buttonLabelSecondary }}
+      </app-button>
+      <app-button size="sm" (click)="primaryAction()">
+        {{ buttonLabelPrimary }}
+      </app-button>
+    </footer>
+  </div>
+</div>

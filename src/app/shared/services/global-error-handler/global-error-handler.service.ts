@@ -28,8 +28,6 @@ export class GlobalErrorHandlerService implements ErrorHandler {
     //throw error (Keep this line uncommented in development  in order to see the error in the console)
   }
   httpErrorResponseHandler(error: HttpErrorResponse) {
-    console.log(Object.keys(error.error));
-
     if (error.error) {
       switch (error.status) {
         case 400:

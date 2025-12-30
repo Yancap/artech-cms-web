@@ -1,0 +1,91 @@
+<header class="container">
+  <div>
+    <div class="nav-container">
+      <img src="/logo.svg" alt="" />
+      <nav>
+        <div class="nav-item">
+          <a routerLink="/">Artigos</a>
+        </div>
+        <div class="nav-item active">
+          <a routerLink="/article/create"> Criar </a>
+        </div>
+        @if (userData && userData.role === "Admin") {
+        <div class="nav-item">
+          <a routerLink="/admin/add-author">Adicionar autor</a>
+        </div>
+        }
+      </nav>
+    </div>
+    <div class="profile-container">
+      <app-profile />
+    </div>
+  </div>
+</header>
+<main class="container">
+  <ng-template #containerModals> </ng-template>
+  <form class="form-article">
+    <div class="head-buttons">
+      <div class="container-switch-button">
+        <app-switch-button
+          [state]="articleForm.currentState"
+          (switch)="getValue($event, 'currentState')"
+        />
+        <span class="article-state-name {{ articleForm.currentState }}">
+          {{
+            articleForm.currentState === "active"
+              ? "Ativo"
+              : articleForm.currentState === "draft"
+              ? "Rascunho"
+              : "Desativado"
+          }}
+        </span>
+      </div>
+      <app-button
+        [size]="'md'"
+        [style]="'primary'"
+        (click)="publishArticle($event)"
+        [disabled]="!isActivable && articleForm.currentState === 'active'"
+      >
+        Salvar
+      </app-button>
+    </div>
+    <app-input-text
+      label="Título"
+      [style]="'alternative'"
+      (onChange)="getValue($event, 'title')"
+    />
+    <app-input-text
+      label="Subtitulo"
+      [style]="'alternative'"
+      (onChange)="getValue($event, 'subtitle')"
+    />
+    <app-input-image
+      label="Imagem"
+      [style]="'alternative'"
+      (onChange)="getValue($event, 'imageBlob')"
+    />
+
+    <app-textarea-editor
+      [style]="'alternative'"
+      (onChange)="getValue($event, 'text')"
+    />
+    <app-input-select
+      label="Category"
+      [style]="'alternative'"
+      [options]="categoriesList"
+      (onChange)="getValue($event, 'category')"
+    />
+    <app-input-add
+      label="Tags"
+      [style]="'alternative'"
+      (onChange)="getValue($event, 'tags')"
+    />
+    <app-input-link
+      label="Creditos"
+      [style]="'alternative'"
+      (onChange)="getValue($event, 'credits')"
+    />
+  </form>
+</main>
+
+<ng-template #containerDialog> </ng-template>

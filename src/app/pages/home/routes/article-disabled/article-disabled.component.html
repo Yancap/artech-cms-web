@@ -20,13 +20,20 @@
           <td>{{ data["category"] }}</td>
           <td>{{ data.createdAt | date : "MMM d, y" }}</td>
           <td class="action">
-            <app-button
-              [size]="'xs'"
-              [style]="'active'"
-              (click)="setStateToActive(data.slug)"
-            >
-              Publicar
-            </app-button>
+            <div>
+              <app-button
+                [size]="'xs'"
+                [style]="'active'"
+                (click)="setStateToActive(data.slug)"
+              >
+                Publicar </app-button
+              ><app-button
+                [size]="'xs'"
+                icon="trash"
+                [style]="'error'"
+                (click)="deleteArticle(data.slug)"
+              />
+            </div>
           </td>
         </tr>
         }

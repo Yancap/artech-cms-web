@@ -14,9 +14,9 @@
           }
         </div>
         @if (userData && userData.role === "Admin") {
-          <div class="nav-item">
-            <a routerLink="/admin/add-author">Adicionar autor</a>
-          </div>
+        <div class="nav-item">
+          <a routerLink="/admin/add-author">Adicionar autor</a>
+        </div>
         }
       </nav>
     </div>
@@ -27,65 +27,78 @@
 </header>
 <main class="container">
   <ng-template #containerModals> </ng-template>
+  <ng-template #containerDialog> </ng-template>
   <form class="form-article">
     <div class="head-buttons">
+      <div class="container-switch-button">
+        <app-switch-button
+          [state]="articleForm.currentState"
+          (switch)="getValue($event, 'currentState')"
+        />
+        <span class="article-state-name {{ articleForm.currentState }}">
+          {{
+            articleForm.currentState === "active"
+              ? "Ativo"
+              : articleForm.currentState === "draft"
+              ? "Rascunho"
+              : "Desativado"
+          }}
+        </span>
+      </div>
       <app-button
-        [size]="'sm'"
-        [style]="'tertiary'"
-        (click)="sendArticleDraft($event)"
-      >
-        Rascunho
-      </app-button>
-      <app-button
-        [size]="'sm'"
+        [size]="'md'"
         [style]="'primary'"
         (click)="publishArticle($event)"
-        [disabled]="!isActivable"
+        [disabled]="!isActivable && articleForm.currentState === 'active'"
       >
         Salvar
       </app-button>
     </div>
+    @if (articleData$ | async; as articleData) {
     <app-input-text
       label="Título"
       [style]="'alternative'"
       (onChange)="getValue($event, 'title')"
-      [value]="articleForm.title"
+      [value]="articleData.title"
     />
     <app-input-text
       label="Subtitulo"
       [style]="'alternative'"
       (onChange)="getValue($event, 'subtitle')"
-      [value]="articleForm.subtitle"
+      [value]="articleData.subtitle"
     />
     <app-input-image
       label="Imagem"
       [style]="'alternative'"
       (onChange)="getValue($event, 'imageBlob')"
-      [value]="articleForm.imageBlob"
+      [value]="articleData.imageUrl"
     />
+
     <app-textarea-editor
       [style]="'alternative'"
       (onChange)="getValue($event, 'text')"
-      [value]="articleForm.text"
+      [value]="articleData.text"
     />
     <app-input-select
       label="Category"
       [style]="'alternative'"
       [options]="categoriesList"
       (onChange)="getValue($event, 'category')"
-      [value]="articleForm.category"
+      [value]="articleData.category"
     />
     <app-input-add
       label="Tags"
       [style]="'alternative'"
       (onChange)="getValue($event, 'tags')"
-      [value]="articleForm.tags"
+      [value]="articleData.tags"
     />
     <app-input-link
       label="Creditos"
       [style]="'alternative'"
       (onChange)="getValue($event, 'credits')"
-      [value]="articleForm.credits"
+      [value]="articleData.credits"
     />
+
+    }
   </form>
 </main>

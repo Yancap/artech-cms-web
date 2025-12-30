@@ -16,8 +16,6 @@ export class SvgComponent implements OnChanges {
   constructor(private http: HttpClient) {}
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-    
     this.getIcon(this.name).subscribe((svg) => (this.svgContent = svg));
   }
 

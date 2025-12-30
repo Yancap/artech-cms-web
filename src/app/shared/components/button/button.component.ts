@@ -28,12 +28,4 @@ export class ButtonComponent {
   @Input() public icon!: string;
   @Input() public disabled!: boolean;
 
-  //@Output() click: EventEmitter<Event> = new EventEmitter();
-
-  // public handleClick(event: Event) {
-  //   event.preventDefault()
-  //   console.log("AAAAAAAAAAAAAAAAAA3333333333");
-
-  //   this.click.emit(event);
-  // }
 }

@@ -8,7 +8,7 @@ import { ButtonComponent } from '../../../../shared/components/button/button.com
 import { PaginatorComponent } from '../../../../shared/components/paginator/paginator.component';
 import { ArticleService } from '../../../../shared/services/article/article.service';
 import { ArticleState } from '../../../../shared/models/enums/article-state.enums';
-import { map, tap } from 'rxjs';
+import { map, take, tap } from 'rxjs';
 import { Router } from '@angular/router';
 const mockDadosTabela = [
   {
@@ -58,7 +58,7 @@ export class ArticleDraftComponent implements OnInit, AfterContentInit {
     this.router.navigateByUrl(`/article/${slug}/edit`);
   }
   createArticle() {
-    this.router.navigateByUrl(`/article/`);
+    this.router.navigateByUrl(`/article/create`);
   }
 
   ngAfterContentInit(): void {
@@ -83,6 +83,16 @@ export class ArticleDraftComponent implements OnInit, AfterContentInit {
       )
       .subscribe();
   }
+
+  deleteArticle(slug: string) {
+    this.articleService
+      .deleteArticle(slug)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.ngOnInit();
+      });
+  }
+
   onChangePage(tableDataOutput: any[]) {
     this.dataSource = tableDataOutput;
     this.cd.detectChanges();

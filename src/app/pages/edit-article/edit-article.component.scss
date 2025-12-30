@@ -68,8 +68,8 @@ header {
 
 main {
   display: flex;
-  gap: 4rem;
-  justify-content: space-between;
+  gap: 2rem;
+  flex-direction: column;
   @media (max-width: 764px) {
     background: var(--dark-purple-900);
     width: 100vw;
@@ -92,16 +92,32 @@ main {
 
 .head-buttons {
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
+  align-items: center;
   gap: 1rem;
-}
+  margin-bottom: 2rem;
 
-:host {
-  ::ng-deep {
-    // form.form-article {
-    //   ul {
-    //     list-style: inherit;
-    //   }
-    // }
+  .container-switch-button{
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .article-state-name {
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-transform: uppercase;
+
+    &.active {
+      color: var(--green-700);
+    }
+
+    &.draft {
+      color: var(--yellow-500);
+    }
+
+    &.disabled {
+      color: var(--red-500);
+    }
   }
 }

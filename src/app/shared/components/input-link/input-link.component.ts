@@ -100,10 +100,10 @@ export class InputLinkComponent {
   }
 
   public getValueName(value: string) {
-    this.saveValueName = value.toLowerCase();
+    this.saveValueName = value;
   }
 
   public getValueLink(value: string) {
-    this.saveValueLink = value.toLowerCase();
+    this.saveValueLink = value;
   }
 }

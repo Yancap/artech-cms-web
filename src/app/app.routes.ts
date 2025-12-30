@@ -9,9 +9,11 @@ import { authGuard } from './shared/guards/auth/auth.guard';
 import { AdminAuthorsComponent } from './pages/home/routes/admin-authors/admin-authors.component';
 import { AdminArticlesComponent } from './pages/home/routes/admin-articles/admin-articles.component';
 import { adminGuard } from './shared/guards/admin/admin.guard';
-import { HandleArticleComponent } from './pages/handle-article/handle-article.component';
 import { ArticleCommentsComponent } from './pages/article-comments/article-comments.component';
 import { AddAuthorComponent } from './pages/add-author/add-author.component';
+import { CreateArticleComponent } from './pages/create-article/create-article.component';
+import { EditArticleComponent } from './pages/edit-article/edit-article.component';
+import { saveArticleBeforeLeaveGuard } from './shared/guards/save-article-before-leave/save-article-before-leave.guard';
 
 export const routes: Routes = [
   {
@@ -63,14 +65,16 @@ export const routes: Routes = [
     ],
   },
   {
-    component: HandleArticleComponent,
+    component: EditArticleComponent,
     path: 'article/:slug/edit',
     canActivate: [authGuard],
+    canDeactivate: [saveArticleBeforeLeaveGuard]
   },
   {
-    component: HandleArticleComponent,
+    component: CreateArticleComponent,
     path: 'article/create',
     canActivate: [authGuard],
+    canDeactivate: [saveArticleBeforeLeaveGuard]
   },
   {
     component: ArticleCommentsComponent,

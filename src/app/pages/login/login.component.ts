@@ -46,20 +46,15 @@ export class LoginComponent implements OnInit {
   }
 
   public email(value: any) {
-    console.log(value);
-    
     this._email = value;
   }
 
   public password(value: any) {
-    console.log(value);
     this._password = value;
   }
 
   public login(event: Event) {
     event.preventDefault();
-    console.log(this._email);
-    console.log(this._password);
     
     this.authService
       .login({

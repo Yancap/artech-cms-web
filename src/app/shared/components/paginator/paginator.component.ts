@@ -9,8 +9,6 @@ import { SvgComponent } from '../svg/svg.component';
   styleUrl: './paginator.component.scss',
 })
 export class PaginatorComponent implements OnInit, AfterContentInit {
-  // [tamanho da página, quantidade de indice, pulo entre cada seta]
-  //pageConfig: [number, number, number] = [3, 3, 5];
   pagePointer = 0;
   pageSize: number = 3;
   pageLength: number = 0;
@@ -38,10 +36,6 @@ export class PaginatorComponent implements OnInit, AfterContentInit {
 
 
     let iForTableData = 0;
-    // while (iForTableData < this.pageLength) {
-    //   const arrayInternal = [];
-    //   iForTableData++;
-    // }
 
     for (let i = 0; i < this.pageLength; i++) {
       const arrayInternal = [];

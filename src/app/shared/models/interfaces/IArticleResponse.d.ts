@@ -18,7 +18,7 @@ declare interface ArticleDTO {
   imageUrl: string;
   createdAt: string;
   updatedAt: string;
-  currentState: string;
+  currentState: ArticleState;
   author: GetAuthorDTO;
   category: string;
   tags: string[];

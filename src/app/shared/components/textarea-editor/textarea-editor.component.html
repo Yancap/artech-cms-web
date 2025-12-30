@@ -112,6 +112,12 @@
     >
       <app-svg name="ordered-list" />
     </button>
+    <button
+      [class.active]="formattingStates.code"
+      (click)="applyCode($event)"
+    >
+      <app-svg name="code" />
+    </button>
   </div>
 
   <div

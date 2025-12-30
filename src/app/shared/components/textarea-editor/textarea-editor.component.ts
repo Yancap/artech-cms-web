@@ -1,7 +1,7 @@
 import {
   AfterViewChecked,
   AfterViewInit,
-  ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
@@ -9,12 +9,10 @@ import {
   OnChanges,
   OnInit,
   Output,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { ButtonComponent } from '../button/button.component';
-import { Subject } from 'rxjs';
-import { SvgComponent } from "../svg/svg.component";
+import { SvgComponent } from '../svg/svg.component';
 
 @Component({
   selector: 'app-textarea-editor',
@@ -23,7 +21,7 @@ import { SvgComponent } from "../svg/svg.component";
   templateUrl: './textarea-editor.component.html',
   styleUrl: './textarea-editor.component.scss',
 })
-export class TextareaEditorComponent implements OnInit, OnChanges {
+export class TextareaEditorComponent implements OnInit, AfterViewInit {
   @ViewChild('editorRef') editorRef!: ElementRef<HTMLDivElement>;
 
   @ViewChild('inputLinkHrefRef')
@@ -49,6 +47,7 @@ export class TextareaEditorComponent implements OnInit, OnChanges {
     ul: false,
     ol: false,
     link: false,
+    code: false,
   };
 
   headingStates: {
@@ -62,7 +61,6 @@ export class TextareaEditorComponent implements OnInit, OnChanges {
   timeoutHandleKeyDown!: NodeJS.Timeout;
 
   ngOnInit(): void {
-    console.log(this.value);
     window.addEventListener('click', (event) => {
       if (
         event.target &&
@@ -91,9 +89,11 @@ export class TextareaEditorComponent implements OnInit, OnChanges {
     });
   }
 
-  ngOnChanges(): void {
+  ngAfterViewInit(): void {
     if (this.editorRef && this.editorRef.nativeElement) {
       this.editorRef.nativeElement.innerHTML = this.value;
+      //document.execCommand('insertHTML', false, `<div>${this.value}</div>`);
+      //this.onInput();
     }
   }
 
@@ -107,18 +107,6 @@ export class TextareaEditorComponent implements OnInit, OnChanges {
 
     (event.target as HTMLInputElement).focus();
 
-    // if (range.commonAncestorContainer instanceof Text) {
-    //   // Criar wrapper
-    //   const highlight = document.createElement('span');
-    //   highlight.classList.add('subselection');
-
-    //   // Extrair e envolver
-    //   const contents = range.extractContents();
-    //   highlight.appendChild(contents);
-    //   range.insertNode(highlight);
-
-    //   (event.target as HTMLInputElement).focus();
-    // }
   }
 
   openLinkFormat(event: Event) {
@@ -126,6 +114,7 @@ export class TextareaEditorComponent implements OnInit, OnChanges {
 
     // Fazer a verificação de se o elemento é um <a> pegar também o seu href
     const selection = document.getSelection();
+
     if (!selection || selection.rangeCount === 0) return;
 
     const range = selection.getRangeAt(0);
@@ -318,6 +307,16 @@ export class TextareaEditorComponent implements OnInit, OnChanges {
     return this.getElementThatParent(child.parentElement, comparer);
   }
 
+  private getTopElementInSelection(
+    currentElement: Element | Node | null
+  ): Element | Node | null {
+    //if (!children[0]) return currentElement;
+    if (!currentElement || !currentElement.parentElement) return null;
+    if (currentElement.parentElement === this.editorRef.nativeElement)
+      return currentElement;
+    return this.getTopElementInSelection(currentElement.parentElement);
+  }
+
   applyFormat(event: Event, format: keyof typeof this.formattingStates) {
     event.preventDefault();
 
@@ -364,160 +363,122 @@ export class TextareaEditorComponent implements OnInit, OnChanges {
     }
   }
 
-  // applyBold(event: Event) {
-  //   event.preventDefault();
-  //   const selection = window.getSelection();
+  applyCode(event: Event) {
+    event.preventDefault();
+    const selection = window.getSelection();
+    if (!selection || selection.rangeCount === 0) return;
 
-  //   if (!selection || selection.rangeCount === 0) return;
+    const range = selection.getRangeAt(0);
+    if (selection.type === 'Caret') {
+      range.collapse(true);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
 
-  //   const range = selection.getRangeAt(0);
-  //   if (range.collapsed) {
-  //     this.formattingStates.bold = !this.formattingStates.bold;
-  //     const divEditor =
-  //       selection.focusNode === this.editorRef.nativeElement
-  //         ? (selection.focusNode as HTMLElement)
-  //         : null;
-  //     if (divEditor) {
-  //       range.setStartAfter(selection.focusNode?.lastChild as Node);
-  //       range.collapse(true);
-  //       selection.removeAllRanges();
-  //       selection.addRange(range);
-  //       return;
-  //     }
 
-  //     range.setStartAfter(selection.focusNode as Node);
-  //     range.collapse(true);
-  //     selection.removeAllRanges();
-  //     selection.addRange(range);
-  //     return;
-  //   } // Não há texto selecionado
+    const elementCode = this.getElementThatParent(range.startContainer, 'CODE');
 
-  //   const nodeElement = range.commonAncestorContainer;
+    if (elementCode !== null && elementCode.parentElement) {
+      if (elementCode.parentElement === this.editorRef.nativeElement) {
+        const innerHtmlElement = elementCode.innerHTML;
+        elementCode.remove();
+        document.execCommand('insertHTML', false, innerHtmlElement);
+      } else if (elementCode.children.length > 0) {
+        // Possui elementos HTML então é innerHMTL
+        elementCode.parentElement.innerHTML =
+          elementCode.parentElement.innerHTML
+            .replace('<code>', '')
+            .replace('</code>', '');
+        elementCode.remove();
+      } else {
+        elementCode.outerHTML = elementCode.outerHTML
+          .replace('<code>', '')
+          .replace('</code>', '');
 
-  //   //Verifica se o ultimo elemento é Strong e adiciona nele
+        // range.insertNode(elementCode);
+        //console.log(range.extractContents());
+        // Apenas texto, então é textoContext
+        // elementCode.parentElement.textContent =
+        //   elementCode.parentElement.textContent; //Tira o link entre o text content e elemento que será removido
 
-  //   const childrenElements = range.cloneContents().children;
-  //   const textContent = range.cloneContents().textContent;
+        //const rangeTextContent = range.cloneContents();
+        // console.log(
+        //   'Comparação 1: ',
+        //   elementCode.textContent !== rangeTextContent.textContent
+        // );
+        // console.log('elementCode.textContent: ', elementCode.textContent);
+        // console.log('rangeTextContent: ', rangeTextContent.textContent);
 
-  //   if (childrenElements.length > 1) {
-  //     const stringArray: string[] = [];
-  //     for (let index = 0; index < childrenElements.length; index++) {
-  //       const result = this.verifyTextContentInChildren(
-  //         childrenElements[index],
-  //         'STRONG'
-  //       );
-  //       stringArray.push(result);
-  //     }
-  //     const textThatStrong = stringArray.join('');
+        // console.log('FORA');
+        // console.log(elementCode.parentElement);
+        // if (
+        //   elementCode.textContent &&
+        //   rangeTextContent.textContent &&
+        //   elementCode.textContent !== rangeTextContent.textContent
+        // ) {
+        //   console.log('DENTRO');
+        //   console.log(elementCode.parentElement);
 
-  //     // Lógica para remover os strongs
-  //     if (textThatStrong === textContent) {
-  //     } else {
-  //       // Lógica para remover os strongs e adicionar um que cobre todo o range
-  //     }
+        //   const contentSeparated = elementCode.textContent.split(
+        //     rangeTextContent.textContent
+        //   );
 
-  //   }
+        //   console.log('contentSeparated: ', contentSeparated);
 
-  //   //Verifica se o elemento selecionado é strong
-  //   console.log(nodeElement);
-  //   if (
-  //     nodeElement.parentElement &&
-  //     nodeElement.parentElement.tagName === 'STRONG'
-  //   ) {
-  //     const cloneSelectedText = range.cloneContents();
-  //     const currentHTMLElement = nodeElement.parentElement;
+        //   // contentSeparated[2] = contentSeparated[1];
+        //   // contentSeparated[1] = rangeTextContent;
 
-  //     //Toggle Strong
-  //     if (currentHTMLElement.textContent === cloneSelectedText.textContent) {
-  //       const selectedText = range.extractContents();
-  //       const saveTextContent = selectedText.textContent;
-  //       range.setStartAfter(nodeElement);
-  //       nodeElement.childNodes.forEach((element) => {
-  //         if (element.nodeName === 'STRONG' || element.nodeName === 'B') {
-  //           element.remove();
-  //         }
-  //       });
-  //       nodeElement.parentElement.remove();
-  //       selectedText.textContent = saveTextContent;
-  //       range.insertNode(selectedText);
-  //       range.collapse(true);
-  //       selection.removeAllRanges();
-  //       selection.addRange(range);
-  //       return;
-  //     }
+        //   console.log('contentSeparated: ', contentSeparated);
+        //   //rangeTextContent = range.extractContents();
+        //   let listCodeElement: (HTMLElement | DocumentFragment)[] = [];
 
-  //     //Remove o Strong de textos que estão dentro de strong
+        //   if (contentSeparated[0].length === 0) {
+        //     listCodeElement.push(rangeTextContent);
+        //     const codeElement = document.createElement('code');
+        //     codeElement.textContent = contentSeparated[1];
+        //     listCodeElement.push(codeElement);
+        //   } else if (contentSeparated[1].length === 0) {
+        //     const codeElement = document.createElement('code');
+        //     codeElement.textContent = contentSeparated[0];
+        //     listCodeElement.push(codeElement);
+        //     listCodeElement.push(rangeTextContent);
+        //   } else {
+        //     const codeElement1 = document.createElement('code');
+        //     codeElement1.textContent = contentSeparated[0];
 
-  //     const startOffset = selection.getRangeAt(0).startOffset;
-  //     const endOffset = selection.getRangeAt(0).endOffset;
+        //     const codeElement2 = document.createElement('code');
+        //     codeElement2.textContent = contentSeparated[1];
 
-  //     //Pega o texto que vem antes do texto selecionado
-  //     range.setStart(nodeElement, 0);
-  //     range.setEnd(nodeElement, startOffset);
-  //     const textBefore = range.cloneContents();
+        //     listCodeElement.push(codeElement1);
+        //     listCodeElement.push(rangeTextContent);
+        //     listCodeElement.push(codeElement2);
+        //   }
 
-  //     //Pega o texto que vem depois do texto selecionado
-  //     range.setStart(nodeElement, endOffset);
-  //     range.setEnd(nodeElement, nodeElement.textContent?.length as number);
-  //     const textAfter = range.cloneContents();
+        //   console.log('listCodeElement: ', listCodeElement);
+        //   //range.deleteContents();
+        //   listCodeElement.forEach((element) => {
+        //     console.log(element.textContent);
 
-  //     const elementBefore = document.createElement('strong');
-  //     const elementAfter = document.createElement('strong');
+        //     if (elementCode.parentElement) {
+        //       elementCode.parentElement.appendChild(element);
+        //     }
+        //   });
+        // }
+      }
 
-  //     elementBefore.innerText = textBefore.textContent as string;
-  //     range.setStartBefore(nodeElement.parentElement);
-  //     range.insertNode(elementBefore);
+      this.formattingStates.code = false;
+    } else {
+      const docFrag = range.extractContents();
+      const codeElement = document.createElement('code');
+      codeElement.appendChild(docFrag);
 
-  //     range.setStartBefore(nodeElement.parentElement);
-  //     range.insertNode(cloneSelectedText);
-
-  //     elementAfter.innerText = textAfter.textContent as string;
-  //     range.setStartAfter(nodeElement.parentElement);
-  //     range.insertNode(elementAfter);
-
-  //     nodeElement.textContent = null;
-
-  //     range.collapse(true);
-  //     selection.removeAllRanges();
-  //     selection.addRange(range);
-
-  //     this.editorRef.nativeElement.childNodes.forEach((element) => {
-  //       if (
-  //         (element.nodeName === 'STRONG' || element.nodeName === 'B') &&
-  //         !element.textContent
-  //       ) {
-  //         element.remove();
-  //       }
-  //     });
-  //     return;
-  //   }
-
-  //   console.log('XAINA 4');
-
-  //   const selectedText = range.extractContents();
-  //   // const saveTextContent = selectedText.textContent;
-  //   // selectedText.textContent = saveTextContent;
-
-  //   const element = document.createElement('strong');
-  //   element.appendChild(selectedText);
-  //   range.insertNode(element);
-
-  //   // Reposiciona o cursor após o elemento inserido
-  //   range.setStartAfter(element);
-  //   range.collapse(true);
-  //   selection.removeAllRanges();
-  //   selection.addRange(range);
-
-  //   //Remover os Strongs vazios
-  //   this.editorRef.nativeElement.childNodes.forEach((element) => {
-  //     if (
-  //       (element.nodeName === 'STRONG' || element.nodeName === 'B') &&
-  //       !element.textContent
-  //     ) {
-  //       element.remove();
-  //     }
-  //   });
-  // }
+      range.insertNode(codeElement);
+      range.setStartAfter(codeElement);
+      range.collapse(true);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+  }
 
   applyUnorderedList(event: Event) {
     event.preventDefault();
@@ -576,14 +537,14 @@ export class TextareaEditorComponent implements OnInit, OnChanges {
 
   //Método que verifica se algum elemento pai é a respectiva tag
   private iterateParentElement(
-    element: HTMLElement | Element | null,
+    element: HTMLElement | Element | Node | null,
     type: string | string[]
   ): boolean {
     if (!element) return false;
     if (element === this.editorRef.nativeElement) return false;
     if (Array.isArray(type))
-      return type.some((name) => element.tagName === name.toUpperCase());
-    if (element.tagName === type.toUpperCase()) return true;
+      return type.some((name) => element.nodeName === name.toUpperCase());
+    if (element.nodeName === type.toUpperCase()) return true;
     return this.iterateParentElement(element.parentElement, type);
   }
 
@@ -599,6 +560,7 @@ export class TextareaEditorComponent implements OnInit, OnChanges {
           this.formattingStates.underline = false;
           this.formattingStates.ul = false;
           this.formattingStates.ol = false;
+          this.formattingStates.code = false;
           this.headingStates.toggleHeading = false;
           this.headingStates.heading = null;
           return;
@@ -616,6 +578,10 @@ export class TextareaEditorComponent implements OnInit, OnChanges {
         this.formattingStates.underline = this.iterateParentElement(
           event.target.parentElement,
           'U'
+        );
+        this.formattingStates.code = this.iterateParentElement(
+          event.target.parentElement,
+          'CODE'
         );
         this.formattingStates.ul = this.iterateParentElement(
           event.target.parentElement,
@@ -663,6 +629,7 @@ export class TextareaEditorComponent implements OnInit, OnChanges {
       this.formattingStates.bold = false;
       this.formattingStates.italic = false;
       this.formattingStates.underline = false;
+      this.formattingStates.code = false;
       this.formattingStates.ul = false;
       this.formattingStates.ol = false;
       this.headingStates.toggleHeading = false;
@@ -683,6 +650,10 @@ export class TextareaEditorComponent implements OnInit, OnChanges {
       selection.focusNode.parentElement,
       'U'
     );
+    this.formattingStates.code = this.iterateParentElement(
+      selection.focusNode.parentElement,
+      'CODE'
+    );
 
     this.formattingStates.ul = this.iterateParentElement(
       selection.focusNode.parentElement,
@@ -692,7 +663,9 @@ export class TextareaEditorComponent implements OnInit, OnChanges {
       selection.focusNode.parentElement,
       'OL'
     );
+
     if (this.iterateParentElement(selection.focusNode.parentElement, 'H1')) {
+      
       this.headingStates.toggleHeading = true;
       this.headingStates.heading = 'h1';
     } else if (
@@ -720,7 +693,12 @@ export class TextareaEditorComponent implements OnInit, OnChanges {
     ) {
       this.headingStates.toggleHeading = true;
       this.headingStates.heading = 'h6';
+    } else {
+      this.headingStates.toggleHeading = false;
+      this.headingStates.heading = null;
+
     }
+
   }
 
   handleKeyUp(event: KeyboardEvent) {
@@ -748,6 +726,10 @@ export class TextareaEditorComponent implements OnInit, OnChanges {
           this.formattingStates.underline = this.iterateParentElement(
             selection.focusNode as Element,
             'U'
+          );
+          this.formattingStates.code = this.iterateParentElement(
+            selection.focusNode as Element,
+            'CODE'
           );
           this.formattingStates.ul = this.iterateParentElement(
             selection.focusNode as Element,
@@ -791,6 +773,7 @@ export class TextareaEditorComponent implements OnInit, OnChanges {
           this.formattingStates.bold = false;
           this.formattingStates.italic = false;
           this.formattingStates.underline = false;
+          this.formattingStates.code = false;
           this.formattingStates.ul = false;
           this.formattingStates.ol = false;
           this.headingStates.toggleHeading = false;

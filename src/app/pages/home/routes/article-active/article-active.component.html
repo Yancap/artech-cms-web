@@ -23,14 +23,22 @@
           <td>{{ data["category"] }}</td>
           <td>{{ data.createdAt | date : "MMM d, y" }}</td>
           <td class="action">
-            <app-button
-              [size]="'xs'"
-              icon="pencil"
-              [style]="'secondary'"
-              (click)="editArticle(data.slug)"
-            >
-              Editar
-            </app-button>
+            <div>
+              <app-button
+                [size]="'xs'"
+                icon="pencil"
+                [style]="'secondary'"
+                (click)="editArticle(data.slug)"
+              >
+                Editar
+              </app-button>
+              <app-button
+                [size]="'xs'"
+                icon="trash"
+                [style]="'error'"
+                (click)="deleteArticle(data.slug)"
+              />
+            </div>
           </td>
         </tr>
         }

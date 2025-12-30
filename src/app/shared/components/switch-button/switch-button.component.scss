@@ -1,0 +1,109 @@
+div.switch {
+  border-radius: 1000px;
+  background: var(--dark-purple-800);
+  padding: 6px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+}
+
+
+button {
+  height: 2.5rem;
+  width: 2.5rem;
+  border-radius: 1000px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+
+  &.active {
+    //background: var(--green-700);
+    grid-column-start: 1;
+    grid-column-end: 2;
+    animation: switchDisabledToActive .25s ease-in;
+  }
+
+  &.draft {
+    //background: var(--yellow-500);
+    animation: switchActiveToDraft .25s ease-in-out;
+    grid-column-start: 2;
+    grid-column-end: 3;
+  }
+
+  &.disabled {
+    //background: var(--red-500);
+    
+    animation: switchDraftToDisabled .25s ease-in-out;
+    grid-column-start: 3;
+    grid-column-end: 4;
+  }
+}
+
+
+div.switch.v2 {
+  box-shadow: inset 4px 4px 4px 2px rgba($color: #1E2027, $alpha: 0.2);
+  
+  &.active {
+    background: var(--green-700);
+  }
+
+  &.draft {
+    background: var(--yellow-500);
+  }
+
+  &.disabled {
+    background: var(--red-500);
+  }
+
+  button {
+    background: var(--dark-purple-100);
+    box-shadow: -1px 2px 2px 1px rgba($color: #1E2027, $alpha: 0.3);
+  }
+}
+
+@keyframes switchActiveToDraft {
+  0% {
+    transform: translateX(0);
+    //background: var(--green-700);
+    grid-column-start: 1;
+    grid-column-end: 2;
+  }
+  100% {
+    transform: translateX(2.75rem);
+    //background: var(--yellow-500);
+    grid-column-start: 1;
+    grid-column-end: 2;
+  }
+}
+
+@keyframes switchDraftToDisabled {
+  0% {
+    transform: translateX(0);
+    //background: var(--yellow-500);
+    grid-column-start: 2;
+    grid-column-end: 3;
+  }
+  100% {
+    transform: translateX(2.75rem);
+    //background: var(--red-500);
+    grid-column-start: 2;
+    grid-column-end: 3;
+  }
+}
+
+@keyframes switchDisabledToActive {
+  0% {
+    transform: translateX(0);
+    //background: var(--red-500);
+    grid-column-start: 3;
+    grid-column-end: 4;
+  }
+  100% {
+    transform: translateX(-5.5rem);
+    //background: var(--green-700);
+    grid-column-start: 3;
+    grid-column-end: 4;
+  }
+}

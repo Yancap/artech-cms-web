@@ -9,6 +9,7 @@
 :root {
   --dark-purple-900: #18191f;
   --dark-purple-800: #1e2027;
+  --dark-purple-750: #23242b;
   --dark-purple-700: #404451;
   --dark-purple-600: #444755;
   --dark-purple-500: #4a4e5d;
@@ -102,10 +103,10 @@ button {
     font-family: "Poppins", sans-serif;
     text-align: left;
     th.action {
-      width: 8rem;
+      width: 9rem;
     }
     th {
-      padding: 1rem .5rem;
+      padding: 1rem 0.5rem;
     }
   }
   tbody {
@@ -114,10 +115,16 @@ button {
     font-family: "Ubuntu", sans-serif;
     text-align: left;
     td {
-      padding: 2rem 2rem 2rem .5rem;
+      padding: 2rem 2rem 2rem 0.5rem;
+      word-break: break-word;
     }
     td.action {
-      padding: 2rem 0.5rem;
+      padding: 0;
+      div {
+        padding: 2rem 0.5rem;
+        display: flex;
+        gap: .5rem;
+      }
     }
   }
 

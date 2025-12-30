@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HandleArticleComponent } from './handle-article.component';
+import { DialogComponent } from './dialog.component';
 
-describe('HandleArticleComponent', () => {
-  let component: HandleArticleComponent;
-  let fixture: ComponentFixture<HandleArticleComponent>;
+describe('DialogComponent', () => {
+  let component: DialogComponent;
+  let fixture: ComponentFixture<DialogComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HandleArticleComponent]
+      imports: [DialogComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(HandleArticleComponent);
+    fixture = TestBed.createComponent(DialogComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

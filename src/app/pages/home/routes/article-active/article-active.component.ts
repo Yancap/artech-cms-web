@@ -9,7 +9,7 @@ import { ButtonComponent } from '../../../../shared/components/button/button.com
 import { PaginatorComponent } from '../../../../shared/components/paginator/paginator.component';
 import { ArticleService } from '../../../../shared/services/article/article.service';
 import { ArticleState } from '../../../../shared/models/enums/article-state.enums';
-import { map, tap } from 'rxjs';
+import { map, take, tap } from 'rxjs';
 import { DatePipe } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -30,17 +30,6 @@ export class ArticleActiveComponent implements OnInit, AfterContentInit {
     private cd: ChangeDetectorRef
   ) {}
 
-  editArticle(slug: string) {
-    this.router.navigateByUrl(`/article/${slug}/edit`);
-  }
-
-  createArticle() {
-    this.router.navigateByUrl(`/article/`);
-  }
-  ngAfterContentInit(): void {
-    this.cd.detectChanges();
-  }
-
   ngOnInit(): void {
     this.articleService
       .getArticleByState(ArticleState.active)
@@ -60,6 +49,28 @@ export class ArticleActiveComponent implements OnInit, AfterContentInit {
       )
       .subscribe();
   }
+
+  editArticle(slug: string) {
+    this.router.navigateByUrl(`/article/${slug}/edit`);
+  }
+
+  deleteArticle(slug: string) {
+    this.articleService
+      .deleteArticle(slug)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.ngOnInit();
+      });
+  }
+
+  createArticle() {
+    this.router.navigateByUrl(`/article/create`);
+  }
+
+  ngAfterContentInit(): void {
+    this.cd.detectChanges();
+  }
+
   onChangePage(tableDataOutput: any[]) {
     this.dataSource = tableDataOutput;
     this.cd.detectChanges();

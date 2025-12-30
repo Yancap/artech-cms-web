@@ -58,6 +58,16 @@ export class ArticleDisabledComponent implements OnInit, AfterContentInit {
         this.ngOnInit();
       });
   }
+  
+  deleteArticle(slug: string) {
+    this.articleService
+      .deleteArticle(slug)
+      .pipe(take(1))
+      .subscribe(() => {
+        this.ngOnInit();
+      });
+  }
+
   onChangePage(tableDataOutput: any[]) {
     this.dataSource = tableDataOutput;
     this.cd.detectChanges();

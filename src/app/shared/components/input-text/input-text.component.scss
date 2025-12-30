@@ -13,7 +13,7 @@ div {
   display: block;
   position: absolute;
   top: 50%;
-  left: 90%;
+  right: 1rem;
   transform: translateY(-50%);
 }
 
@@ -55,11 +55,11 @@ div.normal {
     }
 
     .input-toggle {
-      left: 90%;
+      right: 1rem;
     }
     @media (max-width: 340px) {
       .input-toggle {
-        left: 85%;
+        right: 1.2rem;
       }
     }
   }
@@ -74,11 +74,11 @@ div.normal {
       font-size: 0.875rem;
     }
     .input-toggle {
-      left: 88%;
+      right: 1.2rem;
     }
     @media (max-width: 340px) {
       .input-toggle {
-        left: 83%;
+        right: 1.2rem;
       }
     }
   }
@@ -117,7 +117,7 @@ div.alternative {
     }
 
     .input-toggle {
-      left: 90%;
+      right: 1rem;
     }
   }
 
@@ -132,7 +132,7 @@ div.alternative {
     }
 
     .input-toggle {
-      left: 90%;
+      right: 1rem;
     }
   }
 
@@ -147,7 +147,7 @@ div.alternative {
     }
 
     .input-toggle {
-      left: 88%;
+      right: 1.2rem;
     }
   }
 }

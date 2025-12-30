@@ -5,6 +5,7 @@ import { TokenService } from '../token/token.service';
 import { ArticleState } from '../../models/enums/article-state.enums';
 import { catchError, map, of } from 'rxjs';
 import { Router } from '@angular/router';
+import { ArticleFormDTO } from '../../models/interfaces/IArticleForm';
 
 @Injectable({
   providedIn: 'root',
@@ -35,14 +36,24 @@ export class ArticleService {
     );
   }
 
-  public changeArticleState(slug: string) {
+  public changeArticleState(slug: string, state = ArticleState.active) {
     const token = this.tokenService.getUserToken();
     return this.http.patch<IArticleResponse>(
       environment.apiUrl + this.ENDPOINT,
       {
-        state: ArticleState.active,
+        state,
         slug,
       },
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+  }
+
+  public deleteArticle(slug: string) {
+    const token = this.tokenService.getUserToken();
+    return this.http.delete<IArticleResponse>(
+      environment.apiUrl + this.ENDPOINT + slug,
       {
         headers: { Authorization: `Bearer ${token}` },
       }
@@ -61,6 +72,7 @@ export class ArticleService {
   }
 
   public editArticle(article: ArticleFormDTO) {
+    
     const token = this.tokenService.getUserToken();
     return this.http.put<IArticleResponse>(
       environment.apiUrl + this.ENDPOINT,

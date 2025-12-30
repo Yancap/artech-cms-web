@@ -1,12 +1,19 @@
 import { CategoryService } from './../../shared/services/category/category.service';
-import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewContainerRef,
+} from '@angular/core';
 import { ProfileComponent } from '../../shared/components/profile/profile.component';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { InputTextComponent } from '../../shared/components/input-text/input-text.component';
 import { ButtonComponent } from '../../shared/components/button/button.component';
 import { TextareaEditorComponent } from '../../shared/components/textarea-editor/textarea-editor.component';
 import { InputSelectComponent } from '../../shared/components/input-select/input-select.component';
-import { Subject, take } from 'rxjs';
+import { ReplaySubject, take } from 'rxjs';
 import { InputAddComponent } from '../../shared/components/input-add/input-add.component';
 import { InputLinkComponent } from '../../shared/components/input-link/input-link.component';
 import { ArticleState } from '../../shared/models/enums/article-state.enums';
@@ -16,9 +23,12 @@ import { ModalMessageService } from '../../shared/services/modal-message/modal-m
 import { ModalMessageComponent } from '../../shared/components/modal-message/modal-message.component';
 import { TypeModal } from '../../shared/models/enums/type-modal.enums';
 import { AuthService } from '../../shared/services/auth/auth.service';
+import { SwitchButtonComponent } from '../../shared/components/switch-button/switch-button.component';
+import { ArticleFormDTO } from '../../shared/models/interfaces/IArticleForm';
+import { DialogComponent } from '../../shared/components/dialog/dialog.component';
 
 @Component({
-  selector: 'app-handle-article',
+  selector: 'app-create-article',
   standalone: true,
   imports: [
     ProfileComponent,
@@ -30,18 +40,20 @@ import { AuthService } from '../../shared/services/auth/auth.service';
     InputSelectComponent,
     InputAddComponent,
     InputLinkComponent,
+    SwitchButtonComponent,
   ],
-  templateUrl: './handle-article.component.html',
-  styleUrl: './handle-article.component.scss',
+  templateUrl: './create-article.component.html',
+  styleUrl: './create-article.component.scss',
 })
-export class HandleArticleComponent implements OnInit {
+export class CreateArticleComponent implements OnInit, ISaveArticleBeforeLeave {
   public categoriesList!: string[];
   public articleForm: ArticleFormDTO = {
     title: '',
     subtitle: '',
     text: '',
     imageBlob: '',
-    currentState: '',
+    imageUrl: '',
+    currentState: ArticleState.active,
     category: '',
     tags: [],
     credits: [],
@@ -49,7 +61,6 @@ export class HandleArticleComponent implements OnInit {
 
   public isActivable = false;
   public resetForm = false;
-  public isCreateRoute = true;
   public slug: string | null = null;
   public articleToEdit!: ArticleDTO;
   public userData!: IUserData;
@@ -57,14 +68,14 @@ export class HandleArticleComponent implements OnInit {
   @ViewChild('containerModals', { read: ViewContainerRef, static: true })
   containerModalsRef!: ViewContainerRef;
 
+  @ViewChild('containerDialog', { read: ViewContainerRef, static: true })
+  containerDialogRef!: ViewContainerRef;
+
   constructor(
     private authService: AuthService,
     private categoryService: CategoryService,
     private articleService: ArticleService,
-    private modalMessageService: ModalMessageService,
-    private router: Router,
-    private activatedRouter: ActivatedRoute,
-    private cd: ChangeDetectorRef,
+    private modalMessageService: ModalMessageService
   ) {}
 
   ngOnInit(): void {
@@ -72,24 +83,6 @@ export class HandleArticleComponent implements OnInit {
       this.userData = userData;
     });
 
-    this.isCreateRoute =
-      this.activatedRouter.routeConfig?.path === 'article/create';
-    this.slug = this.activatedRouter.snapshot.paramMap.get('slug');
-
-    console.log(this.articleForm.text);
-    if (!this.isCreateRoute && this.slug) {
-      this.articleService
-        .getArticleBySlug(this.slug)
-        .pipe(take(1))
-        .subscribe((articleToEdit) => {
-          this.articleForm = {
-            ...articleToEdit,
-            imageBlob: articleToEdit.imageUrl,
-          };
-          console.log(this.articleForm.text);
-          this.cd.detectChanges();
-        });
-    }
     this.categoryService
       .getAll()
       .pipe(take(1))
@@ -108,18 +101,11 @@ export class HandleArticleComponent implements OnInit {
       componentRef.instance.type = modalData.type;
       componentRef.instance.closeAction = modalData.closeAction;
       componentRef.instance.componentRef = componentRef;
-      // componentRef.instance.closeModal = () => {
-      //   if (modalData.closeAction) modalData.closeAction();
-      //   componentRef.destroy();
-      // };
     });
   }
 
   getValue(value: any, key: keyof ArticleFormDTO) {
     this.articleForm[key] = value;
-    console.log(key);
-    console.log(value);
-
     this.isActivable =
       this.articleForm.title !== '' &&
       this.articleForm.text !== '' &&
@@ -127,27 +113,17 @@ export class HandleArticleComponent implements OnInit {
       this.articleForm.tags.length !== 0;
   }
 
-  sendArticleDraft(event: Event) {
+  publishArticle(event: Event) {
     event.preventDefault();
-
-    this.articleForm.currentState = ArticleState.draft;
     this.articleService
       .createArticle(this.articleForm)
       .pipe(take(1))
       .subscribe({
         next: () => {
-          this.articleForm = {
-            title: '',
-            subtitle: '',
-            text: '',
-            imageBlob: '',
-            currentState: '',
-            category: '',
-            tags: [],
-            credits: [],
-          };
+          this.isActivable = false;
+          this.resetForms();
           this.modalMessageService.modalStack.next({
-            message: `Rascunho criado com sucesso!`,
+            message: `Artigo criado com sucesso!`,
             details: '',
             scope: 'top',
             status: 201,
@@ -157,75 +133,60 @@ export class HandleArticleComponent implements OnInit {
       });
   }
 
-  publishArticle(event: Event) {
-    event.preventDefault();
-    if (this.isCreateRoute) {
-      this.articleService
-        .createArticle(this.articleForm)
-        .pipe(take(1))
-        .subscribe({
-          next: () => {
-            this.articleForm = {
-              title: '',
-              subtitle: '',
-              text: '',
-              imageBlob: '',
-              currentState: '',
-              category: '',
-              tags: [],
-              credits: [],
-            };
-            this.modalMessageService.modalStack.next({
-              message: `Artigo criado com sucesso!`,
-              details: '',
-              scope: 'top',
-              status: 201,
-              type: TypeModal.SUCCESS,
-            });
-          },
-        });
-    } else {
-      this.articleService
-        .editArticle(this.articleForm)
-        .pipe(take(1))
-        .subscribe({
-          next: () => {
-            this.articleForm = {
-              title: '',
-              subtitle: '',
-              text: '',
-              imageBlob: '',
-              currentState: '',
-              category: '',
-              tags: [],
-              credits: [],
-            };
-            this.modalMessageService.modalStack.next({
-              message: `Artigo editado com sucesso!`,
-              details: '',
-              scope: 'top',
-              status: 201,
-              type: TypeModal.SUCCESS,
-              closeAction: () => {
-                this.router.navigateByUrl('articles/active');
-              },
-            });
-          },
-        });
-    }
-    this.articleForm.currentState = ArticleState.active;
-  }
-
   resetForms() {
     this.articleForm = {
       title: '',
       subtitle: '',
       text: '',
       imageBlob: '',
-      currentState: '',
+      imageUrl: '',
+      currentState: this.articleForm.currentState,
       category: '',
       tags: [],
       credits: [],
     };
+  }
+
+  generateDialogBeforeLeaveOfRoute() {
+    const nextRoute: ReplaySubject<boolean> = new ReplaySubject(1);
+    if (this.isActivable) {
+      const componentRef =
+        this.containerDialogRef.createComponent(DialogComponent);
+      componentRef.instance.title = 'Deseja salvar o artigo como rascunho?';
+      componentRef.instance.paragraphs = [
+        'Caso você recuse, todo o seu trabalho será perdido.',
+      ];
+      componentRef.instance.buttonLabelPrimary = 'Salvar';
+      componentRef.instance.buttonPrimary = () => {
+        this.articleForm.currentState = ArticleState.draft;
+        this.articleService
+          .createArticle(this.articleForm)
+          .pipe(take(1))
+          .subscribe({
+            next: () => {
+              this.resetForms();
+              this.modalMessageService.modalStack.next({
+                message: `Artigo criado com sucesso!`,
+                details: '',
+                scope: 'top',
+                status: 201,
+                type: TypeModal.SUCCESS,
+              });
+              nextRoute.next(true);
+            },
+            error: () => {
+              nextRoute.next(true);
+            },
+          });
+      };
+      componentRef.instance.buttonLabelSecondary = 'Recusar';
+      componentRef.instance.buttonSecondary = () => {
+        nextRoute.next(true);
+      };
+      componentRef.instance.componentRef = componentRef;
+      return nextRoute;
+    }
+    nextRoute.next(true);
+    return nextRoute;
   }
 }
