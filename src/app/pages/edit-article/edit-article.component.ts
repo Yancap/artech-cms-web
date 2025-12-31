@@ -135,8 +135,14 @@ export class EditArticleComponent implements OnInit, ISaveArticleBeforeLeave {
       componentRef.instance.scope = modalData.scope;
       componentRef.instance.status = modalData.status;
       componentRef.instance.type = modalData.type;
-      componentRef.instance.closeAction = modalData.closeAction;
       componentRef.instance.componentRef = componentRef;
+      componentRef.instance.closeModal = () => {
+        if (modalData.type.toUpperCase() === 'SUCCESS') {
+          this.router.navigateByUrl('/');
+        }
+        if (modalData.closeAction) modalData.closeAction();
+        componentRef.destroy();
+      };
     });
   }
 
@@ -189,8 +195,7 @@ export class EditArticleComponent implements OnInit, ISaveArticleBeforeLeave {
   generateDialogBeforeLeaveOfRoute() {
     const nextRoute: ReplaySubject<boolean> = new ReplaySubject(1);
     const isValidToSave =
-      this.articleForm.title !== '' &&
-      this.articleForm.text !== '' ||
+      (this.articleForm.title !== '' && this.articleForm.text !== '') ||
       this.articleForm.category !== '' ||
       this.articleForm.tags.length !== 0;
     if (isValidToSave) {

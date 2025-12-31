@@ -75,6 +75,7 @@ export class CreateArticleComponent implements OnInit, ISaveArticleBeforeLeave {
     private authService: AuthService,
     private categoryService: CategoryService,
     private articleService: ArticleService,
+    private router: Router,
     private modalMessageService: ModalMessageService
   ) {}
 
@@ -99,8 +100,14 @@ export class CreateArticleComponent implements OnInit, ISaveArticleBeforeLeave {
       componentRef.instance.scope = modalData.scope;
       componentRef.instance.status = modalData.status;
       componentRef.instance.type = modalData.type;
-      componentRef.instance.closeAction = modalData.closeAction;
       componentRef.instance.componentRef = componentRef;
+      componentRef.instance.closeModal = () => {
+        if (modalData.type.toUpperCase() === 'SUCCESS') {
+          this.router.navigateByUrl('/');
+        }
+        if (modalData.closeAction) modalData.closeAction();
+        componentRef.destroy();
+      };
     });
   }
 
