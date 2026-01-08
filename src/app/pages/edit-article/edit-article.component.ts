@@ -26,6 +26,7 @@ import { SwitchButtonComponent } from '../../shared/components/switch-button/swi
 import { ArticleFormDTO } from '../../shared/models/interfaces/IArticleForm';
 import { AsyncPipe } from '@angular/common';
 import { DialogComponent } from '../../shared/components/dialog/dialog.component';
+import { SrcImagePipe } from '../../shared/pipes/src-image/src-image.pipe';
 
 @Component({
   selector: 'app-edit-article',
@@ -42,6 +43,7 @@ import { DialogComponent } from '../../shared/components/dialog/dialog.component
     InputLinkComponent,
     SwitchButtonComponent,
     AsyncPipe,
+    SrcImagePipe,
   ],
   templateUrl: './edit-article.component.html',
   styleUrl: './edit-article.component.scss',

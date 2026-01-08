@@ -8,6 +8,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { concatMap, tap } from 'rxjs';
 import { InputTextComponent } from '../input-text/input-text.component';
 import { TypeModal } from '../../models/enums/type-modal.enums';
+import { SrcImagePipe } from '../../pipes/src-image/src-image.pipe';
 
 @Component({
   selector: 'app-change-user-data',
@@ -20,6 +21,7 @@ export class ChangeUserDataComponent implements OnInit {
   constructor(
     private managementService: ManagementService,
     private authService: AuthService,
+    private srcImage: SrcImagePipe,
     private modalMessageService: ModalMessageService
   ) {}
 
@@ -34,7 +36,7 @@ export class ChangeUserDataComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.userAccess.subscribe((userData) => {
-      this.imageBlob = userData.urlAvatar;
+      this.imageBlob = this.srcImage.transform(userData.urlAvatar);
     });
   }
 

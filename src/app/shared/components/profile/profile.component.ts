@@ -10,11 +10,12 @@ import {
 import { ChangeUserDataComponent } from '../change-user-data/change-user-data.component';
 import { Router } from '@angular/router';
 import { SvgComponent } from '../svg/svg.component';
+import { SrcImagePipe } from '../../pipes/src-image/src-image.pipe';
 
 @Component({
   selector: 'app-profile',
   standalone: true,
-  imports: [SvgComponent],
+  imports: [SvgComponent, SrcImagePipe],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
 })

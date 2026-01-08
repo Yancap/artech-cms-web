@@ -71,7 +71,7 @@
       label="Imagem"
       [style]="'alternative'"
       (onChange)="getValue($event, 'imageBlob')"
-      [value]="articleData.imageUrl"
+      [value]="articleData.imageUrl | srcImage"
     />
 
     <app-textarea-editor

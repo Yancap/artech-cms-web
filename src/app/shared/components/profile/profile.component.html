@@ -9,7 +9,7 @@
     <div class="border-external active">
       @if (userData && userData.urlAvatar) {
       <div class="border-internal" (click)="openChangeAvatarModal()">
-        <img [src]="userData.urlAvatar" alt="" srcset="" />
+        <img [src]="userData.urlAvatar | srcImage" alt="" srcset="" />
       </div>
 
       } @else {

@@ -26,6 +26,7 @@ import { AuthService } from '../../shared/services/auth/auth.service';
 import { SwitchButtonComponent } from '../../shared/components/switch-button/switch-button.component';
 import { ArticleFormDTO } from '../../shared/models/interfaces/IArticleForm';
 import { DialogComponent } from '../../shared/components/dialog/dialog.component';
+import { SrcImagePipe } from '../../shared/pipes/src-image/src-image.pipe';
 
 @Component({
   selector: 'app-create-article',
@@ -40,7 +41,7 @@ import { DialogComponent } from '../../shared/components/dialog/dialog.component
     InputSelectComponent,
     InputAddComponent,
     InputLinkComponent,
-    SwitchButtonComponent,
+    SwitchButtonComponent
   ],
   templateUrl: './create-article.component.html',
   styleUrl: './create-article.component.scss',
